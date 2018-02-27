@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>perspective test</title>
+<style>
+
+.small {
+  perspective: 100px;
+  
+  width: 100px;
+  height: 100px;
+  margin: 100px;
+  border: 1px solid #ddd;
+}
+
+.large {
+  perspective: 100px;
+  
+  width: 200px;
+  height: 200px;
+  margin: 100px;
+  border: 1px solid #ddd;
+}
+
+.inner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+  width: 100px;
+  height: 100px;
+  background: rgba(255, 0, 0, 0.5);
+  transform: translateZ(50px);
+}
+
+.huge {
+  perspective: 100px;
+  width: 1000px;
+  height: 1000px;
+  border: 1px solid #ddd;
+}
+
+.huge-inner {
+  float: left;
+  width: 100px;
+  height: 100px;
+  outline: 1px solid #ddd;
+  background: rgba(255, 0, 0, 0.5);
+  /* transform: translateZ(50px); */
+}
+
+</style>
+</head>
+<body>
+  <div class="small">
+    <div class="inner"></div>
+  </div>
+  <div class="large">
+    <div class="inner"></div>
+  </div>
+
+
+  <div class="huge">
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+    <div class="huge-inner"></div>
+  </div>
+</body>
+</html>
