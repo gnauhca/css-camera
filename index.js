@@ -43,7 +43,7 @@ face6.elem.className = 'face'
 
 // face2.elem.style.background = 'rgba(255, 0, 0, 0.5)';
 
-camera.setPosition([0, 0, 300]);
+camera.setPosition([-100, 100, 300]);
 camera.setLookAt([0, 0, 0]);
 
 face1.setPosition([0, 0, 55]); 
@@ -82,7 +82,35 @@ group.add(face6);
 
 
 let box = new Box(100, 50, 80, '#abcdef');
-scene.add(box);
+// scene.add(box);
+
+let box2 = new Box(50, 50, 50, 'red');
+box2.setPosition([100, 0, 0]);
+// scene.add(box2);
+
+let box3 = new Box(50, 50, 50, '#223412');
+box3.setPosition([-100, 0, 0]);
+// scene.add(box3);
+
+
+let boxes = [];
+let boxWidthCount = 5;
+let boxWidthCountHalf = boxWidthCount / 2;
+
+for (let x = 0; x < boxWidthCount; x++) {
+  for (let y = 0; y < boxWidthCount; y++) {
+    let color = `rgba(${(Math.random() * 255) | 0}, ${(Math.random() * 255) | 0}, ${(Math.random() * 255) | 0}, ${(Math.random().toFixed(6))}, )`;
+    let count = x * boxWidthCount + y
+    // console.log(color);
+    
+    boxes[count] = new Box(20, 20, 20, `rgba(${(Math.random() * 255) | 0}, ${(Math.random() * 255) | 0}, ${(Math.random() * 255) | 0}, 1)`);
+    boxes[count].setPosition([(x - boxWidthCountHalf) * 30, (y - boxWidthCountHalf) * 30, (Math.random() - 0.5) * 300 ]);
+    
+    boxes[count].rotationAdd = [Math.random() * 0.06, Math.random() * 0.06, Math.random() * 0.06];
+    
+    scene.add(boxes[count]);
+  }
+}
 
 let light = new Light([-1.5, 1, 0.6], 1);
 scene.addLight(light);
@@ -97,21 +125,32 @@ let renderer = new CSS3D.Renderer({
 });
 
 renderer.render(scene, camera);
-
-
 let cameraRadian = 0;
 function tick(){
-  cameraRadian += 0.006;
+  // cameraRadian += 1.57;
+  cameraRadian += 0.007;
 
-  // camera.setPosition([Math.cos(cameraRadian) * 300, Math.sin(cameraRadian) * 300, Math.sin(cameraRadian) * 300]);
+  camera.setPosition([Math.cos(cameraRadian) * 300, Math.sin(cameraRadian) * 300, Math.sin(cameraRadian) * 300]);
   renderer.render(scene, camera);
   window.requestAnimationFrame(tick);
-  // setTimeout(tick, 100);
+  // setTimeout(tick, 1000);
 
-  box.setRotation([box.rotation[0] + 0.02, box.rotation[1] + 0.006, box.rotation[2] + 0.04]);
+  // box.setRotation([box.rotation[0] + 0.02, box.rotation[1] + 0.006, box.rotation[2] + 0.04]);
+  // box2.setRotation([box2.rotation[0] + 0.05, box2.rotation[1] + 0.001, box2.rotation[2] + 0.04]);
+  // box3.setRotation([box3.rotation[0] + 0.06, box3.rotation[1] + 0.003, box3.rotation[2] + 0.01]);
   // box.rotation[1] += 0.01;
 
-  // console.log(box.rotation);
+  for (let x = 0; x < boxWidthCount; x++) {
+    for (let y = 0; y < boxWidthCount; y++) {
+      // console.log(x + y);
+      let count = x * boxWidthCount + y; //break;
+      boxes[count].setRotation([
+        boxes[count].rotation[0] + boxes[count].rotationAdd[0], 
+        boxes[count].rotation[1] + boxes[count].rotationAdd[1], 
+        boxes[count].rotation[2] + boxes[count].rotationAdd[2]
+      ]);
+    }
+  }
   stats.update();
 }
 tick();
