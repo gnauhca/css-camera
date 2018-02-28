@@ -7,12 +7,10 @@
   border: 1px solid red;
 
   .face {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    // transform
-    background: rgba(255, 0, 0, 0.3);
-    backface-visibility: visible;
+    width: 100px;
+    height: 100px;
+    background: rgba(255, 0, 0, 1);
+    // backface-visibility: visible;
   }
   overflow: hidden;
 }
@@ -25,3 +23,5 @@
   height: 100%;
   transform-style: preserve-3d;
 }
+
+

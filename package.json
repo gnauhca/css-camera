@@ -24,6 +24,7 @@
     "webpack-dev-server": "^2.7.1"
   },
   "dependencies": {
-    "gl-matrix": "^2.4.0"
+    "gl-matrix": "^2.4.0",
+    "stats.js": "^0.17.0"
   }
 }

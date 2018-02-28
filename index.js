@@ -1,49 +1,45 @@
-require('./index.scss');
-
 import * as CSS3D from './lib/main.js';
+import Box from './lib/geometry/box.js';
+import Light from './lib/light.js';
+import Stats from 'stats.js';
+import * as glMatrix from 'gl-matrix';
 
+let stats = new Stats();
+document.body.appendChild( stats.dom );
+
+require('./index.scss');
 
 let containerElem = document.querySelector('.container');
 let containerWidth = containerElem.offsetWidth;
 let containerHeight = containerElem.offsetHeight;
 let aspect = containerWidth / containerHeight;
 
-let camera = new CSS3D.Camera(Math.PI / 2, aspect);
+let camera = new CSS3D.Camera(Math.PI / 4, aspect);
 let scene = new CSS3D.Scene(containerElem);
-let face1 = new CSS3D.Face({
-  width: 100,
-  height: 100
-});
-let face2 = new CSS3D.Face({
-  width: 100,
-  height: 100
-});
-let face3 = new CSS3D.Face({
-  width: 100,
-  height: 100
-});
-let face4 = new CSS3D.Face({
-  width: 100,
-  height: 100
-});
-let face5 = new CSS3D.Face({
-  width: 100,
-  height: 100
-});
-let face6 = new CSS3D.Face({
-  width: 100,
-  height: 100
-});
 
-let plane = new CSS3D.Face({
-  width: 500,
-  height: 500
-});
+let face1 = new CSS3D.Face();
+let face2 = new CSS3D.Face();
+let face3 = new CSS3D.Face();
+let face4 = new CSS3D.Face();
+let face5 = new CSS3D.Face();
+let face6 = new CSS3D.Face();
 
-plane.setPosition([0, -60, 0]);
-plane.setRotation([Math.PI / -2, 0, 0]);
-plane.elem.style.background = '#ddd';
-scene.add(plane);
+face1.elem.className = 'face'
+face2.elem.className = 'face'
+face3.elem.className = 'face'
+face4.elem.className = 'face'
+face5.elem.className = 'face'
+face6.elem.className = 'face'
+
+// let plane = new CSS3D.Face({
+//   width: 500,
+//   height: 500
+// });
+
+// plane.setPosition([0, -60, 0]);
+// plane.setRotation([Math.PI / -2, 0, 0]);
+// plane.elem.style.background = '#ddd';
+// scene.add(plane);
 
 // face2.elem.style.background = 'rgba(255, 0, 0, 0.5)';
 
@@ -82,23 +78,40 @@ group.add(face4);
 group.add(face5);
 group.add(face6);
 
-scene.add(group);
+// scene.add(group); rotateX(10deg) rotateY(10deg)
+
+
+let box = new Box(100, 50, 80, '#abcdef');
+scene.add(box);
+
+let light = new Light([-1.5, 1, 0.6], 1);
+scene.addLight(light);
+scene.ambientLightIntensity = 0.3
+
+
+window.glMatrix = glMatrix;
+
+
+let renderer = new CSS3D.Renderer({
+  lightEffect: true
+});
+
+renderer.render(scene, camera);
 
 
 let cameraRadian = 0;
 function tick(){
   cameraRadian += 0.006;
 
-  camera.setPosition([Math.cos(cameraRadian) * 300, Math.sin(cameraRadian) * 300 + 300, Math.sin(cameraRadian) * 300]);
-  CSS3D.render(scene, camera);
+  // camera.setPosition([Math.cos(cameraRadian) * 300, Math.sin(cameraRadian) * 300, Math.sin(cameraRadian) * 300]);
+  renderer.render(scene, camera);
   window.requestAnimationFrame(tick);
   // setTimeout(tick, 100);
 
-  // group.setRotation([group.rotation[0], group.rotation[1] + 0.006, group.rotation[2]]);
-  // group.rotation[1] += 0.01;
+  box.setRotation([box.rotation[0] + 0.02, box.rotation[1] + 0.006, box.rotation[2] + 0.04]);
+  // box.rotation[1] += 0.01;
 
-  // console.log(group.rotation);
+  // console.log(box.rotation);
+  stats.update();
 }
 tick();
-
-CSS3D.render(scene, camera);
