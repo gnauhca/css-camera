@@ -3,6 +3,7 @@ import Box from './lib/geometry/box.js';
 import Light from './lib/light.js';
 import Stats from 'stats.js';
 import * as glMatrix from 'gl-matrix';
+import * as CONST from './lib/const.js';
 
 let stats = new Stats();
 document.body.appendChild( stats.dom );
@@ -43,42 +44,8 @@ face6.elem.className = 'face'
 
 // face2.elem.style.background = 'rgba(255, 0, 0, 0.5)';
 
-camera.setPosition([-100, 100, 300]);
+camera.setPosition([-100, 100, 800]);
 camera.setLookAt([0, 0, 0]);
-
-face1.setPosition([0, 0, 55]); 
-face2.setPosition([0, 0, -55]);
-face3.setPosition([0, -55, 0]); 
-face4.setPosition([0, 55, 0]);
-face5.setPosition([55, 0, 0]); 
-face6.setPosition([-55, 0, 0]);
-
-// face.setScale([0.5, 1, 1]);
-// face1.setRotation([Math.PI / -4, 0, 0]);
-face2.setRotation([Math.PI, 0, 0]);
-face3.setRotation([Math.PI / -2, 0, 0]);
-face4.setRotation([Math.PI / 2, 0, 0]);
-face5.setRotation([0, Math.PI / -2, 0]);
-face6.setRotation([0, Math.PI / 2, 0]);
-// face2.setRotation([Math.PI / -2, 0, 0]);
-// scene.add(face1);
-// scene.add(face2);
-// scene.add(face3);
-// scene.add(face4);
-// scene.add(face5);
-// scene.add(face6);
-
-let group = new CSS3D.Group();
-
-
-group.add(face1);
-group.add(face2);
-group.add(face3);
-group.add(face4);
-group.add(face5);
-group.add(face6);
-
-// scene.add(group); rotateX(10deg) rotateY(10deg)
 
 
 let box = new Box(100, 50, 80, '#abcdef');
@@ -88,8 +55,9 @@ let box2 = new Box(50, 50, 50, 'red');
 box2.setPosition([100, 0, 0]);
 // scene.add(box2);
 
-let box3 = new Box(50, 50, 50, '#223412');
-box3.setPosition([-100, 0, 0]);
+let box3 = new Box(50, 50, 50, 'rgba(255, 0, 0, 0.9)');
+box3.setPosition([0, 0, 0]);
+
 // scene.add(box3);
 
 
@@ -112,9 +80,9 @@ for (let x = 0; x < boxWidthCount; x++) {
   }
 }
 
-let light = new Light([-1.5, 1, 0.6], 1);
+let light = new Light([-200, 100, 150], 1);
 scene.addLight(light);
-scene.ambientLightIntensity = 0.3
+scene.ambientLightIntensity = 0.6
 
 
 window.glMatrix = glMatrix;
@@ -133,13 +101,15 @@ function tick(){
   camera.setPosition([Math.cos(cameraRadian) * 300, Math.sin(cameraRadian) * 300, Math.sin(cameraRadian) * 300]);
   renderer.render(scene, camera);
   window.requestAnimationFrame(tick);
-  // setTimeout(tick, 1000);
+  // setTimeout(tick, 2000);
 
   // box.setRotation([box.rotation[0] + 0.02, box.rotation[1] + 0.006, box.rotation[2] + 0.04]);
   // box2.setRotation([box2.rotation[0] + 0.05, box2.rotation[1] + 0.001, box2.rotation[2] + 0.04]);
-  // box3.setRotation([box3.rotation[0] + 0.06, box3.rotation[1] + 0.003, box3.rotation[2] + 0.01]);
-  // box.rotation[1] += 0.01;
+  box3.setRotation([box3.rotation[0] + 0.06, box3.rotation[1] + 0.003, box3.rotation[2] + 0.01]);
+  box.rotation[1] += 0.01;
+  stats.update();
 
+  return;
   for (let x = 0; x < boxWidthCount; x++) {
     for (let y = 0; y < boxWidthCount; y++) {
       // console.log(x + y);
@@ -151,6 +121,5 @@ function tick(){
       ]);
     }
   }
-  stats.update();
 }
 tick();
