@@ -22,17 +22,6 @@ export default class Light{
   calBrightness(position, normal, backSide) {
     // overwrite
     
-    let lightPosition = [ ...this.position ];
-    lightPosition[1] *= -1; 
-
-    let cosOfAngle = glMatrix.vec3.dot(lightPosition, normal) / (glMatrix.vec3.length(lightPosition) * 1);
-    let brightness = 0;
-
-    if (backSide) {
-      brightness = Math.abs(cosOfAngle);
-    } else {
-      brightness = cosOfAngle < 0 ? 0 : cosOfAngle;
-    }
 
     // console.log(brightness);
 

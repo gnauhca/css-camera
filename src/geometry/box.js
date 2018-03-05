@@ -31,32 +31,32 @@ export default class Box extends Group {
   }
 
   setSize(width, height, depth) {
-    this.faces.front.setPosition([0, 0, depth / 2]);
+    this.faces.front.setPosition(0, 0, depth / 2);
     this.faces.front.elem.style.width = width + 'px';
     this.faces.front.elem.style.height = height + 'px';
 
-    this.faces.back.setPosition([0, 0, -depth / 2]);
-    this.faces.back.rotation[0] = CONST.R180;
+    this.faces.back.setPosition(0, 0, -depth / 2);
+    this.faces.back.rotation.x = CONST.R180;
     this.faces.back.elem.style.width = width + 'px';
     this.faces.back.elem.style.height = height + 'px';
 
-    this.faces.left.setPosition([-width / 2, 0, 0]);
-    this.faces.left.rotation[1] = CONST.R90;
+    this.faces.left.setPosition(-width / 2, 0, 0);
+    this.faces.left.rotation.y = CONST.R90;
     this.faces.left.elem.style.width = depth + 'px';
     this.faces.left.elem.style.height = height + 'px';
 
-    this.faces.right.setPosition([width / 2, 0, 0]);
-    this.faces.right.rotation[1] = -CONST.R90;
+    this.faces.right.setPosition(width / 2, 0, 0);
+    this.faces.right.rotation.y = -CONST.R90;
     this.faces.right.elem.style.width = depth + 'px';
     this.faces.right.elem.style.height = height + 'px';
 
-    this.faces.top.setPosition([0, height / 2, 0]);
-    this.faces.top.rotation[0] = CONST.R90;
+    this.faces.top.setPosition(0, height / 2, 0);
+    this.faces.top.rotation.x = CONST.R90;
     this.faces.top.elem.style.width = width + 'px';
     this.faces.top.elem.style.height = depth + 'px';
 
-    this.faces.bottom.setPosition([0, -height / 2, 0]);
-    this.faces.bottom.rotation[0] = -CONST.R90;
+    this.faces.bottom.setPosition(0, -height / 2, 0);
+    this.faces.bottom.rotation.x = -CONST.R90;
     this.faces.bottom.elem.style.width = width + 'px';
     this.faces.bottom.elem.style.height = depth + 'px';
   }

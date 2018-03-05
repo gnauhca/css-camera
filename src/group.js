@@ -48,7 +48,7 @@ export default class Group extends Object3D {
 
   updateElemMatrix() {
     if (this.elemMatrixNeedUpdate) {
-      let modelMatrix = this.getModelMatrix().map(num => num.toFixed(6));
+      let modelMatrix = this.getModelMatrix().elements.map(num => num.toFixed(6));
       
       this.elem.style.transform = `translate(-50%, -50%) matrix3d(${modelMatrix.join(',')})`;
       this.elemMatrixNeedUpdate = false;

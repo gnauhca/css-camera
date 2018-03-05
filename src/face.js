@@ -1,5 +1,4 @@
 import Object3D from './object3d.js';
-import * as glMatrix from 'gl-matrix';
 
 export default class Face extends Object3D {
   constructor(elem) {
@@ -31,7 +30,7 @@ export default class Face extends Object3D {
 
   setNeedUpdate() {
     super.setNeedUpdate();
-    this.elemTransformNeedUpdate = true;
+    this.elemMatrixNeedUpdate = true;
     this.elemLightNeedUpdate = true;
   }
 
@@ -44,7 +43,7 @@ export default class Face extends Object3D {
 
   updateElemMatrix() {
     if (this.elemMatrixNeedUpdate) {
-      let modelMatrix = this.getModelMatrix().map(num => num.toFixed(6));
+      let modelMatrix = this.getModelMatrix().elements.map(num => num.toFixed(6));
       
       this.elem.style.transform = `translate(-50%, -50%) matrix3d(${modelMatrix.join(',')})`;
       this.elemMatrixNeedUpdate = false;
