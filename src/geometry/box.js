@@ -59,6 +59,9 @@ export default class Box extends Group {
     this.faces.bottom.rotation.x = -CONST.R90;
     this.faces.bottom.elem.style.width = width + 'px';
     this.faces.bottom.elem.style.height = depth + 'px';
+    this.width = width;
+    this.height = height;
+    this.depth = depth;
   }
 
   setColor(color) {

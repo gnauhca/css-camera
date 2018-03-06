@@ -118,6 +118,7 @@ function tick(){
         boxes[count].rotation.y + boxes[count].rotationAdd[1], 
         boxes[count].rotation.z + boxes[count].rotationAdd[2]
       );
+      boxes[count].setSize(boxes[count].width + 0.1, boxes[count].height, boxes[count].depth);
     }
   }
 }
