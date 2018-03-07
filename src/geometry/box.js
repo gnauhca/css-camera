@@ -1,6 +1,6 @@
-import Face from '../face.js';
-import Group from '../group.js';
-import * as CONST from '../const.js';
+import Face from '../Face.js';
+import Group from '../Group.js';
+import * as CONST from '../CONST.js';
 
 export default class Box extends Group {
   constructor(width, height, depth, color) {

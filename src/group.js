@@ -1,4 +1,4 @@
-import Object3D from './object3d.js';
+import Object3D from './Object3D.js';
 
 export default class Group extends Object3D {
   constructor() {

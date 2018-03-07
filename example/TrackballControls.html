@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>TrackballControls</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+.container {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  border: 1px solid red;
+}
+
+</style>
+<script src="./lib/stats.min.js"></script>
+<script src="../dist/c3.js"></script>
+</head>
+<body>
+<div class="container">
+
+</div>
+
+<script>
+let stats = new Stats();
+document.body.appendChild( stats.dom );
+
+let renderer = new C3.Renderer({
+  lightEffect: true
+});
+
+let containerElem = document.querySelector('.container');
+let camera = new C3.Camera(Math.PI / 4);
+
+camera.setPosition(0, 0, 300);
+camera.setLookAt(0, 0, 0);
+camera.setUp(0, 1, 0);
+
+
+let scene = new C3.Scene(containerElem);
+
+let directionLight = new C3.DirectionLight(new C3.Vector3(10, 0, 0), 1);
+scene.addLight(directionLight);
+let directionLight2 = new C3.DirectionLight(new C3.Vector3(-5, 10, 0), 1);
+scene.addLight(directionLight2);
+let ambientLight = new C3.AmbientLight(0.2);
+scene.addLight(ambientLight);
+
+
+
+let box = new C3.Box(50, 50, 50, 'rgba(23, 111, 188, 0.9)');
+box.setPosition(0, 0, 0);
+box.rotation.y = 0.93
+
+scene.add(box);
+
+let cameraRadian = 0;
+function tick(){
+  stats.update();
+
+  cameraRadian += 0.007;
+  camera.setPosition(Math.cos(cameraRadian) * 300, Math.sin(cameraRadian) * 300, Math.sin(cameraRadian) * 300);
+  
+  // camera.setPosition(0, 0, 300);
+  renderer.render(scene, camera);
+  window.requestAnimationFrame(tick);
+  // setTimeout(tick, 500);
+
+  // box.rotation.y += 0.01;
+  // box.setNeedUpdate();
+
+
+}
+renderer.render(scene, camera);
+tick();
+// console.log(C3);
+
+
+</script>
+</body>
+</html>

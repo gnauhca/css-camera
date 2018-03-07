@@ -1,7 +1,7 @@
 import * as CSS3D from './src/main.js';
-import Box from './src/geometry/box.js';
-import Light from './src/light.js';
-import * as CONST from './src/const.js';
+import Box from './src/geometry/Box.js';
+import Light from './src/Light.js';
+import * as CONST from './src/CONST.js';
 import { Vector3 } from './src/math/Vector3.js';
 import './index.scss';
 

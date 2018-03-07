@@ -1,4 +1,4 @@
-import Object3D from './object3d.js';
+import Object3D from './Object3D.js';
 
 export default class Face extends Object3D {
   constructor(elem) {
@@ -7,7 +7,7 @@ export default class Face extends Object3D {
     this.elemLightNeedUpdate = true; // 元素 亮度 是否需要更新
     this.brightness = 1; // 元素亮度
     
-    const defaultStyle = {
+    const faceStyles = {
       position: 'absolute',
       top: '50%',
       left: '50%',
@@ -16,8 +16,8 @@ export default class Face extends Object3D {
 
     this.elem = elem || document.createElement('div');
 
-    for (let item in defaultStyle) {
-      let value = defaultStyle[item];
+    for (let item in faceStyles) {
+      let value = faceStyles[item];
 
       if (typeof value === 'number') {
         value += 'px';

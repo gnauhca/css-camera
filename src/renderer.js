@@ -1,5 +1,5 @@
-import Group from './group.js';
-import Face from './face.js';
+import Group from './Group.js';
+import Face from './Face.js';
 
 class Renderer {
   constructor(options) {

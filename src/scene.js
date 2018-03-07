@@ -1,15 +1,37 @@
-import Group from './group.js';
-import Light from './light.js'
+import Group from './Group.js';
+import Light from './Light.js'
 
 export default class Scene {
   constructor(container) {
+    let viewWrapperStyles = {
+      'position': 'absolute',
+      'top': 0,
+      'left': 0,
+      'width': '100%',
+      'height': '100%',
+      'transform-style': 'preserve-3d'
+    };
+
     this.container = container;
-    this.viewWrapper = document.createElement('div');
-    this.viewWrapper.className = 'CSS3D-view-wrapper';
-    this.container.appendChild(this.viewWrapper);
     this.width = this.container.offsetWidth;
     this.height = this.container.offsetHeight;
-    this.faces = [];
+
+    this.viewWrapper = document.createElement('div');
+    Object.assign(viewWrapperStyles, {
+      width: this.width,
+      height: this.height
+    });
+    for (let item in viewWrapperStyles) {
+      let value = viewWrapperStyles[item];
+
+      if (typeof value === 'number') {
+        value += 'px';
+      }
+
+      this.viewWrapper.style[item] = value;
+    }
+
+    this.container.appendChild(this.viewWrapper);
     this.objs = [];
 
     this.lights = [];
