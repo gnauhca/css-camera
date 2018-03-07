@@ -79,9 +79,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Vector3; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Math__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Math__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Matrix4__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Quaternion__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Quaternion__ = __webpack_require__(5);
 
 
 
@@ -1760,7 +1760,7 @@ Object.assign( Matrix4.prototype, {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Object3D_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Object3D_js__ = __webpack_require__(6);
 
 
 class Group extends __WEBPACK_IMPORTED_MODULE_0__Object3D_js__["a" /* default */] {
@@ -1828,7 +1828,34 @@ class Group extends __WEBPACK_IMPORTED_MODULE_0__Object3D_js__["a" /* default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Object3D_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__math_Vector3_js__ = __webpack_require__(0);
+
+
+class Light {
+  constructor() {
+    this.updated = true;
+  }
+
+  setNeedUpdate() {
+    this.updated = true;;
+  }
+
+  calBrightness(position, normal, backSide) {
+    // overwrite
+
+    return 0;
+  }
+
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Light;
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Object3D_js__ = __webpack_require__(6);
 
 
 class Face extends __WEBPACK_IMPORTED_MODULE_0__Object3D_js__["a" /* default */] {
@@ -1893,369 +1920,7 @@ class Face extends __WEBPACK_IMPORTED_MODULE_0__Object3D_js__["a" /* default */]
 
 
 /***/ }),
-/* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__math_Vector3_js__ = __webpack_require__(0);
-
-
-class Light {
-  constructor() {
-    this.updated = true;
-  }
-
-  setNeedUpdate() {
-    this.updated = true;;
-  }
-
-  calBrightness(position, normal, backSide) {
-    // overwrite
-
-    return 0;
-  }
-
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Light;
-
-
-/***/ }),
 /* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__math_Vector3_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__math_Matrix4_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__math_Euler_js__ = __webpack_require__(8);
-
-
-
-
-class Object3D {
-  constructor() {
-    this.position = new __WEBPACK_IMPORTED_MODULE_0__math_Vector3_js__["a" /* Vector3 */](0, 0, 0);
-    this.rotation = new __WEBPACK_IMPORTED_MODULE_2__math_Euler_js__["a" /* Euler */](0, 0, 0);
-    this.scale = new __WEBPACK_IMPORTED_MODULE_0__math_Vector3_js__["a" /* Vector3 */](1, 1, 1);
-
-    this.modelMatrix = new __WEBPACK_IMPORTED_MODULE_1__math_Matrix4_js__["a" /* Matrix4 */]();
-    this.worldModelMatrix = new __WEBPACK_IMPORTED_MODULE_1__math_Matrix4_js__["a" /* Matrix4 */]();
-    this.normal = new __WEBPACK_IMPORTED_MODULE_0__math_Vector3_js__["a" /* Vector3 */](0, 0, 1);
-
-    this.modelMatrixNeedUpdate = false;
-    this.worldModelMatrixNeedUpdate = false;
-    this.normalNeedUpdate = false;
-
-    this.elem = null;
-  }
-
-  setNeedUpdate() {
-    this.modelMatrixNeedUpdate = true;
-    this.worldModelMatrixNeedUpdate = true;
-    this.normalNeedUpdate = true;
-  }
-
-  setPosition(x, y, z) {
-    this.position.set(x, y, z);
-    this.setNeedUpdate();
-  }
-
-  setPositionX(x) {
-    this.position.x = x;
-    this.setNeedUpdate();
-  }
-
-  setPositionY(y) {
-    this.position.y = y;
-    this.setNeedUpdate();
-  }
-
-  setPositionZ(z) {
-    this.position.z = z;
-    this.setNeedUpdate();
-  }
-
-
-  setRotation(x, y, z) {
-    this.rotation.set(x, y, z);
-    this.setNeedUpdate();
-  }
-
-  setRotationX(x) {
-    this.rotation.x = x;
-    this.setNeedUpdate();
-  }
-
-  setRotationY(y) {
-    this.rotation.y = y;
-    this.setNeedUpdate();
-  }
-
-  setRotationZ(z) {
-    this.rotation.z = z;
-    this.setNeedUpdate();
-  }
-
-
-  setScale(x, y, z) {
-    this.scale.set(x, y, z);
-    this.setNeedUpdate();
-  }
-
-  setScaleX(x) {
-    this.scale.x = x;
-    this.setNeedUpdate();
-  }
-
-  setScaleY(y) {
-    this.scale.y = y;
-    this.setNeedUpdate();
-  }
-
-  setScaleZ(z) {
-    this.scale.z = z;
-    this.setNeedUpdate();
-  }
-
-  getModelMatrix() {
-    if (!this.modelMatrixNeedUpdate) {
-      return this.modelMatrix;
-    }
-
-    let position = this.position.clone();
-    let rotation = this.rotation.clone();
-    let scale = this.scale.clone();
-
-    position.y *= -1;
-    rotation.y *= -1;
-    scale.y *= -1;
-
-    let scaleMatrix = new __WEBPACK_IMPORTED_MODULE_1__math_Matrix4_js__["a" /* Matrix4 */]().makeScale(scale.x, scale.y, scale.z);
-    let rotationMatrix = new __WEBPACK_IMPORTED_MODULE_1__math_Matrix4_js__["a" /* Matrix4 */]().makeRotationFromEuler(rotation);
-    let translateMatrix = new __WEBPACK_IMPORTED_MODULE_1__math_Matrix4_js__["a" /* Matrix4 */]().makeTranslation(position.x, position.y, position.z);
-
-    let modelMatrix = translateMatrix.multiply(rotationMatrix).multiply(scaleMatrix);
-
-    this.modelMatrix = modelMatrix.clone();
-    this.modelMatrixNeedUpdate = false;
-    return modelMatrix;
-  }
-
-  getWorldModalMatrix() {
-    if (!this.worldModelMatrixNeedUpdate) {
-      return this.worldModelMatrix;
-    }
-
-    let parent = this.parent;
-    let matrix = this.getModelMatrix();
-
-    if (parent) {
-      matrix = new __WEBPACK_IMPORTED_MODULE_1__math_Matrix4_js__["a" /* Matrix4 */]().multiplyMatrices(parent.getWorldModalMatrix(), matrix);
-    }
-
-    this.worldModelMatrixNeedUpdate = false;
-    this.worldModelMatrix = matrix.clone();
-    return matrix;
-  }
-
-  getWorldNormal() {
-    if (!this.normalNeedUpdate) {
-      return this.normal;
-    }
-
-    let start = new __WEBPACK_IMPORTED_MODULE_0__math_Vector3_js__["a" /* Vector3 */](0, 0, 0);
-    let end = new __WEBPACK_IMPORTED_MODULE_0__math_Vector3_js__["a" /* Vector3 */](0, 0, 1);
-    let worldModelMatrix = this.getWorldModalMatrix();
-
-    start = start.applyMatrix4(worldModelMatrix);
-    end = end.applyMatrix4(worldModelMatrix);
-
-    this.normal = new __WEBPACK_IMPORTED_MODULE_0__math_Vector3_js__["a" /* Vector3 */]().subVectors(end, start);
-    this.normalNeedUpdate = false;
-    return this.normal.clone();
-  }
-  
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Object3D;
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _Math; });
-/**
- * @author alteredq / http://alteredqualia.com/
- * @author mrdoob / http://mrdoob.com/
- */
-
-var _Math = {
-
-	DEG2RAD: Math.PI / 180,
-	RAD2DEG: 180 / Math.PI,
-
-	generateUUID: function () {
-
-		// http://www.broofa.com/Tools/Math.uuid.htm
-
-		var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split( '' );
-		var uuid = new Array( 36 );
-		var rnd = 0, r;
-
-		return function generateUUID() {
-
-			for ( var i = 0; i < 36; i ++ ) {
-
-				if ( i === 8 || i === 13 || i === 18 || i === 23 ) {
-
-					uuid[ i ] = '-';
-
-				} else if ( i === 14 ) {
-
-					uuid[ i ] = '4';
-
-				} else {
-
-					if ( rnd <= 0x02 ) rnd = 0x2000000 + ( Math.random() * 0x1000000 ) | 0;
-					r = rnd & 0xf;
-					rnd = rnd >> 4;
-					uuid[ i ] = chars[ ( i === 19 ) ? ( r & 0x3 ) | 0x8 : r ];
-
-				}
-
-			}
-
-			return uuid.join( '' );
-
-		};
-
-	}(),
-
-	clamp: function ( value, min, max ) {
-
-		return Math.max( min, Math.min( max, value ) );
-
-	},
-
-	// compute euclidian modulo of m % n
-	// https://en.wikipedia.org/wiki/Modulo_operation
-
-	euclideanModulo: function ( n, m ) {
-
-		return ( ( n % m ) + m ) % m;
-
-	},
-
-	// Linear mapping from range <a1, a2> to range <b1, b2>
-
-	mapLinear: function ( x, a1, a2, b1, b2 ) {
-
-		return b1 + ( x - a1 ) * ( b2 - b1 ) / ( a2 - a1 );
-
-	},
-
-	// https://en.wikipedia.org/wiki/Linear_interpolation
-
-	lerp: function ( x, y, t ) {
-
-		return ( 1 - t ) * x + t * y;
-
-	},
-
-	// http://en.wikipedia.org/wiki/Smoothstep
-
-	smoothstep: function ( x, min, max ) {
-
-		if ( x <= min ) return 0;
-		if ( x >= max ) return 1;
-
-		x = ( x - min ) / ( max - min );
-
-		return x * x * ( 3 - 2 * x );
-
-	},
-
-	smootherstep: function ( x, min, max ) {
-
-		if ( x <= min ) return 0;
-		if ( x >= max ) return 1;
-
-		x = ( x - min ) / ( max - min );
-
-		return x * x * x * ( x * ( x * 6 - 15 ) + 10 );
-
-	},
-
-	// Random integer from <low, high> interval
-
-	randInt: function ( low, high ) {
-
-		return low + Math.floor( Math.random() * ( high - low + 1 ) );
-
-	},
-
-	// Random float from <low, high> interval
-
-	randFloat: function ( low, high ) {
-
-		return low + Math.random() * ( high - low );
-
-	},
-
-	// Random float from <-range/2, range/2> interval
-
-	randFloatSpread: function ( range ) {
-
-		return range * ( 0.5 - Math.random() );
-
-	},
-
-	degToRad: function ( degrees ) {
-
-		return degrees * _Math.DEG2RAD;
-
-	},
-
-	radToDeg: function ( radians ) {
-
-		return radians * _Math.RAD2DEG;
-
-	},
-
-	isPowerOfTwo: function ( value ) {
-
-		return ( value & ( value - 1 ) ) === 0 && value !== 0;
-
-	},
-
-	nearestPowerOfTwo: function ( value ) {
-
-		return Math.pow( 2, Math.round( Math.log( value ) / Math.LN2 ) );
-
-	},
-
-	nextPowerOfTwo: function ( value ) {
-
-		value --;
-		value |= value >> 1;
-		value |= value >> 2;
-		value |= value >> 4;
-		value |= value >> 8;
-		value |= value >> 16;
-		value ++;
-
-		return value;
-
-	}
-
-};
-
-
-
-
-
-/***/ }),
-/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2874,15 +2539,350 @@ Object.assign( Quaternion.prototype, {
 
 
 /***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__math_Vector3_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__math_Matrix4_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__math_Euler_js__ = __webpack_require__(8);
+
+
+
+
+class Object3D {
+  constructor() {
+    this.position = new __WEBPACK_IMPORTED_MODULE_0__math_Vector3_js__["a" /* Vector3 */](0, 0, 0);
+    this.rotation = new __WEBPACK_IMPORTED_MODULE_2__math_Euler_js__["a" /* Euler */](0, 0, 0);
+    this.scale = new __WEBPACK_IMPORTED_MODULE_0__math_Vector3_js__["a" /* Vector3 */](1, 1, 1);
+
+    this.modelMatrix = new __WEBPACK_IMPORTED_MODULE_1__math_Matrix4_js__["a" /* Matrix4 */]();
+    this.worldModelMatrix = new __WEBPACK_IMPORTED_MODULE_1__math_Matrix4_js__["a" /* Matrix4 */]();
+    this.normal = new __WEBPACK_IMPORTED_MODULE_0__math_Vector3_js__["a" /* Vector3 */](0, 0, 1);
+
+    this.modelMatrixNeedUpdate = false;
+    this.worldModelMatrixNeedUpdate = false;
+    this.normalNeedUpdate = false;
+
+    this.elem = null;
+  }
+
+  setNeedUpdate() {
+    this.modelMatrixNeedUpdate = true;
+    this.worldModelMatrixNeedUpdate = true;
+    this.normalNeedUpdate = true;
+  }
+
+  setPosition(x, y, z) {
+    this.position.set(x, y, z);
+    this.setNeedUpdate();
+  }
+
+  setPositionX(x) {
+    this.position.x = x;
+    this.setNeedUpdate();
+  }
+
+  setPositionY(y) {
+    this.position.y = y;
+    this.setNeedUpdate();
+  }
+
+  setPositionZ(z) {
+    this.position.z = z;
+    this.setNeedUpdate();
+  }
+
+
+  setRotation(x, y, z) {
+    this.rotation.set(x, y, z);
+    this.setNeedUpdate();
+  }
+
+  setRotationX(x) {
+    this.rotation.x = x;
+    this.setNeedUpdate();
+  }
+
+  setRotationY(y) {
+    this.rotation.y = y;
+    this.setNeedUpdate();
+  }
+
+  setRotationZ(z) {
+    this.rotation.z = z;
+    this.setNeedUpdate();
+  }
+
+
+  setScale(x, y, z) {
+    this.scale.set(x, y, z);
+    this.setNeedUpdate();
+  }
+
+  setScaleX(x) {
+    this.scale.x = x;
+    this.setNeedUpdate();
+  }
+
+  setScaleY(y) {
+    this.scale.y = y;
+    this.setNeedUpdate();
+  }
+
+  setScaleZ(z) {
+    this.scale.z = z;
+    this.setNeedUpdate();
+  }
+
+  getModelMatrix() {
+    if (!this.modelMatrixNeedUpdate) {
+      return this.modelMatrix;
+    }
+
+    let position = this.position.clone();
+    let rotation = this.rotation.clone();
+    let scale = this.scale.clone();
+
+    // position.y *= -1;
+    // rotation.y *= -1;
+    // scale.y *= -1;
+
+    let scaleMatrix = new __WEBPACK_IMPORTED_MODULE_1__math_Matrix4_js__["a" /* Matrix4 */]().makeScale(scale.x, scale.y, scale.z);
+    let rotationMatrix = new __WEBPACK_IMPORTED_MODULE_1__math_Matrix4_js__["a" /* Matrix4 */]().makeRotationFromEuler(rotation);
+    let translateMatrix = new __WEBPACK_IMPORTED_MODULE_1__math_Matrix4_js__["a" /* Matrix4 */]().makeTranslation(position.x, position.y, position.z);
+
+    let modelMatrix = translateMatrix.multiply(rotationMatrix).multiply(scaleMatrix);
+
+    this.modelMatrix = modelMatrix.clone();
+    this.modelMatrixNeedUpdate = false;
+    return modelMatrix;
+  }
+
+  getWorldModalMatrix() {
+    if (!this.worldModelMatrixNeedUpdate) {
+      return this.worldModelMatrix;
+    }
+
+    let parent = this.parent;
+    let matrix = this.getModelMatrix();
+
+    if (parent) {
+      matrix = new __WEBPACK_IMPORTED_MODULE_1__math_Matrix4_js__["a" /* Matrix4 */]().multiplyMatrices(parent.getWorldModalMatrix(), matrix);
+    }
+
+    this.worldModelMatrixNeedUpdate = false;
+    this.worldModelMatrix = matrix.clone();
+    return matrix;
+  }
+
+  getWorldNormal() {
+    if (!this.normalNeedUpdate) {
+      return this.normal;
+    }
+
+    let start = new __WEBPACK_IMPORTED_MODULE_0__math_Vector3_js__["a" /* Vector3 */](0, 0, 0);
+    let end = new __WEBPACK_IMPORTED_MODULE_0__math_Vector3_js__["a" /* Vector3 */](0, 0, 1);
+    let worldModelMatrix = this.getWorldModalMatrix();
+
+    start = start.applyMatrix4(worldModelMatrix);
+    end = end.applyMatrix4(worldModelMatrix);
+
+    this.normal = new __WEBPACK_IMPORTED_MODULE_0__math_Vector3_js__["a" /* Vector3 */]().subVectors(end, start);
+    this.normalNeedUpdate = false;
+    return this.normal.clone();
+  }
+  
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Object3D;
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _Math; });
+/**
+ * @author alteredq / http://alteredqualia.com/
+ * @author mrdoob / http://mrdoob.com/
+ */
+
+var _Math = {
+
+	DEG2RAD: Math.PI / 180,
+	RAD2DEG: 180 / Math.PI,
+
+	generateUUID: function () {
+
+		// http://www.broofa.com/Tools/Math.uuid.htm
+
+		var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split( '' );
+		var uuid = new Array( 36 );
+		var rnd = 0, r;
+
+		return function generateUUID() {
+
+			for ( var i = 0; i < 36; i ++ ) {
+
+				if ( i === 8 || i === 13 || i === 18 || i === 23 ) {
+
+					uuid[ i ] = '-';
+
+				} else if ( i === 14 ) {
+
+					uuid[ i ] = '4';
+
+				} else {
+
+					if ( rnd <= 0x02 ) rnd = 0x2000000 + ( Math.random() * 0x1000000 ) | 0;
+					r = rnd & 0xf;
+					rnd = rnd >> 4;
+					uuid[ i ] = chars[ ( i === 19 ) ? ( r & 0x3 ) | 0x8 : r ];
+
+				}
+
+			}
+
+			return uuid.join( '' );
+
+		};
+
+	}(),
+
+	clamp: function ( value, min, max ) {
+
+		return Math.max( min, Math.min( max, value ) );
+
+	},
+
+	// compute euclidian modulo of m % n
+	// https://en.wikipedia.org/wiki/Modulo_operation
+
+	euclideanModulo: function ( n, m ) {
+
+		return ( ( n % m ) + m ) % m;
+
+	},
+
+	// Linear mapping from range <a1, a2> to range <b1, b2>
+
+	mapLinear: function ( x, a1, a2, b1, b2 ) {
+
+		return b1 + ( x - a1 ) * ( b2 - b1 ) / ( a2 - a1 );
+
+	},
+
+	// https://en.wikipedia.org/wiki/Linear_interpolation
+
+	lerp: function ( x, y, t ) {
+
+		return ( 1 - t ) * x + t * y;
+
+	},
+
+	// http://en.wikipedia.org/wiki/Smoothstep
+
+	smoothstep: function ( x, min, max ) {
+
+		if ( x <= min ) return 0;
+		if ( x >= max ) return 1;
+
+		x = ( x - min ) / ( max - min );
+
+		return x * x * ( 3 - 2 * x );
+
+	},
+
+	smootherstep: function ( x, min, max ) {
+
+		if ( x <= min ) return 0;
+		if ( x >= max ) return 1;
+
+		x = ( x - min ) / ( max - min );
+
+		return x * x * x * ( x * ( x * 6 - 15 ) + 10 );
+
+	},
+
+	// Random integer from <low, high> interval
+
+	randInt: function ( low, high ) {
+
+		return low + Math.floor( Math.random() * ( high - low + 1 ) );
+
+	},
+
+	// Random float from <low, high> interval
+
+	randFloat: function ( low, high ) {
+
+		return low + Math.random() * ( high - low );
+
+	},
+
+	// Random float from <-range/2, range/2> interval
+
+	randFloatSpread: function ( range ) {
+
+		return range * ( 0.5 - Math.random() );
+
+	},
+
+	degToRad: function ( degrees ) {
+
+		return degrees * _Math.DEG2RAD;
+
+	},
+
+	radToDeg: function ( radians ) {
+
+		return radians * _Math.RAD2DEG;
+
+	},
+
+	isPowerOfTwo: function ( value ) {
+
+		return ( value & ( value - 1 ) ) === 0 && value !== 0;
+
+	},
+
+	nearestPowerOfTwo: function ( value ) {
+
+		return Math.pow( 2, Math.round( Math.log( value ) / Math.LN2 ) );
+
+	},
+
+	nextPowerOfTwo: function ( value ) {
+
+		value --;
+		value |= value >> 1;
+		value |= value >> 2;
+		value |= value >> 4;
+		value |= value >> 8;
+		value |= value >> 16;
+		value ++;
+
+		return value;
+
+	}
+
+};
+
+
+
+
+
+/***/ }),
 /* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Euler; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Quaternion__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Quaternion__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Vector3__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Matrix4__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Math__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Math__ = __webpack_require__(7);
 
 
 
@@ -3243,18 +3243,20 @@ Object.assign( Euler.prototype, {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Face_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Face_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Group_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Scene_js__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Camera_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Renderer_js__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Light_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Light_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__DirectionLight_js__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__AmbientLight_js__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__geometry_Box_js__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__math_Vector3_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__math_Matrix4_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__math_Euler_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__AmbientLight_js__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__geometry_Box_js__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__math_Vector2_js__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__math_Vector3_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__math_Matrix4_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__math_Euler_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__math_Quaternion_js__ = __webpack_require__(5);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Face", function() { return __WEBPACK_IMPORTED_MODULE_0__Face_js__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Group", function() { return __WEBPACK_IMPORTED_MODULE_1__Group_js__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Scene", function() { return __WEBPACK_IMPORTED_MODULE_2__Scene_js__["a"]; });
@@ -3263,9 +3265,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "AmbientLight", function() { return __WEBPACK_IMPORTED_MODULE_7__AmbientLight_js__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "DirectionLight", function() { return __WEBPACK_IMPORTED_MODULE_6__DirectionLight_js__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Box", function() { return __WEBPACK_IMPORTED_MODULE_8__geometry_Box_js__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Vector3", function() { return __WEBPACK_IMPORTED_MODULE_9__math_Vector3_js__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Matrix4", function() { return __WEBPACK_IMPORTED_MODULE_10__math_Matrix4_js__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Euler", function() { return __WEBPACK_IMPORTED_MODULE_11__math_Euler_js__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Vector2", function() { return __WEBPACK_IMPORTED_MODULE_9__math_Vector2_js__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Vector3", function() { return __WEBPACK_IMPORTED_MODULE_10__math_Vector3_js__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Matrix4", function() { return __WEBPACK_IMPORTED_MODULE_11__math_Matrix4_js__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Euler", function() { return __WEBPACK_IMPORTED_MODULE_12__math_Euler_js__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Quaternion", function() { return __WEBPACK_IMPORTED_MODULE_13__math_Quaternion_js__["a"]; });
+
+
 
 
 
@@ -3289,7 +3295,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Group_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Light_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Light_js__ = __webpack_require__(3);
 
 
 
@@ -3417,7 +3423,7 @@ class Camera {
     this.setNeedUpdate();
   }
 
-  lookAt(x, y, z) {
+  lookAt({x, y, z}) {
     // alias for setLookAt
     this.setLookAt(x, y, z);
   }
@@ -3467,9 +3473,9 @@ class Camera {
     let up = this.up.clone();
     let lookAtPoint = this.lookAtPoint.clone();
 
-    position.y *= -1;
+    // position.y *= -1;
     // up.y *= -1;
-    lookAtPoint.y *= -1;
+    // lookAtPoint.y *= -1;
 
     let translateMatrix = new __WEBPACK_IMPORTED_MODULE_1__math_Matrix4_js__["a" /* Matrix4 */]().makeTranslation(position.x, position.y, position.z);
     let viewMatrix = new __WEBPACK_IMPORTED_MODULE_1__math_Matrix4_js__["a" /* Matrix4 */]().lookAt(position, lookAtPoint, up);
@@ -3492,7 +3498,7 @@ class Camera {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Group_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Face_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Face_js__ = __webpack_require__(4);
 
 
 
@@ -3567,7 +3573,7 @@ class Renderer {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Light_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Light_js__ = __webpack_require__(3);
 
 
 class DirectionLight extends __WEBPACK_IMPORTED_MODULE_0__Light_js__["a" /* default */] {
@@ -3612,7 +3618,7 @@ class DirectionLight extends __WEBPACK_IMPORTED_MODULE_0__Light_js__["a" /* defa
     // overwrite
 
     let lightPosition = this.position.clone();;
-    lightPosition.y *= -1; 
+    // lightPosition.y *= -1; 
 
     let cosOfAngle = lightPosition.dot(normal) / (lightPosition.length() * 1);
     let brightness = 0;
@@ -3637,9 +3643,38 @@ class DirectionLight extends __WEBPACK_IMPORTED_MODULE_0__Light_js__["a" /* defa
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Face_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Light_js__ = __webpack_require__(3);
+
+
+class AmbientLight extends __WEBPACK_IMPORTED_MODULE_0__Light_js__["a" /* default */] {
+
+  constructor(intensity) {
+    super();
+    this.intensity = intensity;
+    this.updated = true;
+  }
+
+  setIntensity(intense) {
+    this.intensity = intensity;
+    setNeedUpdate();
+  }
+
+  calBrightness() {
+    return this.intensity;
+  }
+
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = AmbientLight;
+
+
+/***/ }),
+/* 15 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Face_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Group_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CONST_js__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CONST_js__ = __webpack_require__(16);
 
 
 
@@ -3683,22 +3718,22 @@ class Box extends __WEBPACK_IMPORTED_MODULE_1__Group_js__["a" /* default */] {
     this.faces.back.elem.style.height = height + 'px';
 
     this.faces.left.setPosition(-width / 2, 0, 0);
-    this.faces.left.rotation.y = __WEBPACK_IMPORTED_MODULE_2__CONST_js__["b" /* R90 */];
+    this.faces.left.rotation.y = -__WEBPACK_IMPORTED_MODULE_2__CONST_js__["b" /* R90 */];
     this.faces.left.elem.style.width = depth + 'px';
     this.faces.left.elem.style.height = height + 'px';
 
     this.faces.right.setPosition(width / 2, 0, 0);
-    this.faces.right.rotation.y = -__WEBPACK_IMPORTED_MODULE_2__CONST_js__["b" /* R90 */];
+    this.faces.right.rotation.y = __WEBPACK_IMPORTED_MODULE_2__CONST_js__["b" /* R90 */];
     this.faces.right.elem.style.width = depth + 'px';
     this.faces.right.elem.style.height = height + 'px';
 
     this.faces.top.setPosition(0, height / 2, 0);
-    this.faces.top.rotation.x = __WEBPACK_IMPORTED_MODULE_2__CONST_js__["b" /* R90 */];
+    this.faces.top.rotation.x = -__WEBPACK_IMPORTED_MODULE_2__CONST_js__["b" /* R90 */];
     this.faces.top.elem.style.width = width + 'px';
     this.faces.top.elem.style.height = depth + 'px';
 
     this.faces.bottom.setPosition(0, -height / 2, 0);
-    this.faces.bottom.rotation.x = -__WEBPACK_IMPORTED_MODULE_2__CONST_js__["b" /* R90 */];
+    this.faces.bottom.rotation.x = __WEBPACK_IMPORTED_MODULE_2__CONST_js__["b" /* R90 */];
     this.faces.bottom.elem.style.width = width + 'px';
     this.faces.bottom.elem.style.height = depth + 'px';
     this.width = width;
@@ -3722,7 +3757,7 @@ class Box extends __WEBPACK_IMPORTED_MODULE_1__Group_js__["a" /* default */] {
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3752,32 +3787,492 @@ const R30 = Math.PI * 0.1666666667;
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Light_js__ = __webpack_require__(4);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Vector2; });
+/**
+ * @author mrdoob / http://mrdoob.com/
+ * @author philogb / http://blog.thejit.org/
+ * @author egraether / http://egraether.com/
+ * @author zz85 / http://www.lab4games.net/zz85/blog
+ */
 
+function Vector2( x, y ) {
 
-class AmbientLight extends __WEBPACK_IMPORTED_MODULE_0__Light_js__["a" /* default */] {
-
-  constructor(intensity) {
-    super();
-    this.intensity = intensity;
-    this.updated = true;
-  }
-
-  setIntensity(intense) {
-    this.intensity = intensity;
-    setNeedUpdate();
-  }
-
-  calBrightness() {
-    return this.intensity;
-  }
+	this.x = x || 0;
+	this.y = y || 0;
 
 }
-/* harmony export (immutable) */ __webpack_exports__["a"] = AmbientLight;
+
+Object.defineProperties( Vector2.prototype, {
+
+	"width" : {
+
+		get: function () {
+
+			return this.x;
+
+		},
+
+		set: function ( value ) {
+
+			this.x = value;
+
+		}
+
+	},
+
+	"height" : {
+
+		get: function () {
+
+			return this.y;
+
+		},
+
+		set: function ( value ) {
+
+			this.y = value;
+
+		}
+
+	}
+
+} );
+
+Object.assign( Vector2.prototype, {
+
+	isVector2: true,
+
+	set: function ( x, y ) {
+
+		this.x = x;
+		this.y = y;
+
+		return this;
+
+	},
+
+	setScalar: function ( scalar ) {
+
+		this.x = scalar;
+		this.y = scalar;
+
+		return this;
+
+	},
+
+	setX: function ( x ) {
+
+		this.x = x;
+
+		return this;
+
+	},
+
+	setY: function ( y ) {
+
+		this.y = y;
+
+		return this;
+
+	},
+
+	setComponent: function ( index, value ) {
+
+		switch ( index ) {
+
+			case 0: this.x = value; break;
+			case 1: this.y = value; break;
+			default: throw new Error( 'index is out of range: ' + index );
+
+		}
+
+		return this;
+
+	},
+
+	getComponent: function ( index ) {
+
+		switch ( index ) {
+
+			case 0: return this.x;
+			case 1: return this.y;
+			default: throw new Error( 'index is out of range: ' + index );
+
+		}
+
+	},
+
+	clone: function () {
+
+		return new this.constructor( this.x, this.y );
+
+	},
+
+	copy: function ( v ) {
+
+		this.x = v.x;
+		this.y = v.y;
+
+		return this;
+
+	},
+
+	add: function ( v, w ) {
+
+		if ( w !== undefined ) {
+
+			console.warn( 'THREE.Vector2: .add() now only accepts one argument. Use .addVectors( a, b ) instead.' );
+			return this.addVectors( v, w );
+
+		}
+
+		this.x += v.x;
+		this.y += v.y;
+
+		return this;
+
+	},
+
+	addScalar: function ( s ) {
+
+		this.x += s;
+		this.y += s;
+
+		return this;
+
+	},
+
+	addVectors: function ( a, b ) {
+
+		this.x = a.x + b.x;
+		this.y = a.y + b.y;
+
+		return this;
+
+	},
+
+	addScaledVector: function ( v, s ) {
+
+		this.x += v.x * s;
+		this.y += v.y * s;
+
+		return this;
+
+	},
+
+	sub: function ( v, w ) {
+
+		if ( w !== undefined ) {
+
+			console.warn( 'THREE.Vector2: .sub() now only accepts one argument. Use .subVectors( a, b ) instead.' );
+			return this.subVectors( v, w );
+
+		}
+
+		this.x -= v.x;
+		this.y -= v.y;
+
+		return this;
+
+	},
+
+	subScalar: function ( s ) {
+
+		this.x -= s;
+		this.y -= s;
+
+		return this;
+
+	},
+
+	subVectors: function ( a, b ) {
+
+		this.x = a.x - b.x;
+		this.y = a.y - b.y;
+
+		return this;
+
+	},
+
+	multiply: function ( v ) {
+
+		this.x *= v.x;
+		this.y *= v.y;
+
+		return this;
+
+	},
+
+	multiplyScalar: function ( scalar ) {
+
+		this.x *= scalar;
+		this.y *= scalar;
+
+		return this;
+
+	},
+
+	divide: function ( v ) {
+
+		this.x /= v.x;
+		this.y /= v.y;
+
+		return this;
+
+	},
+
+	divideScalar: function ( scalar ) {
+
+		return this.multiplyScalar( 1 / scalar );
+
+	},
+
+	min: function ( v ) {
+
+		this.x = Math.min( this.x, v.x );
+		this.y = Math.min( this.y, v.y );
+
+		return this;
+
+	},
+
+	max: function ( v ) {
+
+		this.x = Math.max( this.x, v.x );
+		this.y = Math.max( this.y, v.y );
+
+		return this;
+
+	},
+
+	clamp: function ( min, max ) {
+
+		// assumes min < max, componentwise
+
+		this.x = Math.max( min.x, Math.min( max.x, this.x ) );
+		this.y = Math.max( min.y, Math.min( max.y, this.y ) );
+
+		return this;
+
+	},
+
+	clampScalar: function () {
+
+		var min = new Vector2();
+		var max = new Vector2();
+
+		return function clampScalar( minVal, maxVal ) {
+
+			min.set( minVal, minVal );
+			max.set( maxVal, maxVal );
+
+			return this.clamp( min, max );
+
+		};
+
+	}(),
+
+	clampLength: function ( min, max ) {
+
+		var length = this.length();
+
+		return this.divideScalar( length || 1 ).multiplyScalar( Math.max( min, Math.min( max, length ) ) );
+
+	},
+
+	floor: function () {
+
+		this.x = Math.floor( this.x );
+		this.y = Math.floor( this.y );
+
+		return this;
+
+	},
+
+	ceil: function () {
+
+		this.x = Math.ceil( this.x );
+		this.y = Math.ceil( this.y );
+
+		return this;
+
+	},
+
+	round: function () {
+
+		this.x = Math.round( this.x );
+		this.y = Math.round( this.y );
+
+		return this;
+
+	},
+
+	roundToZero: function () {
+
+		this.x = ( this.x < 0 ) ? Math.ceil( this.x ) : Math.floor( this.x );
+		this.y = ( this.y < 0 ) ? Math.ceil( this.y ) : Math.floor( this.y );
+
+		return this;
+
+	},
+
+	negate: function () {
+
+		this.x = - this.x;
+		this.y = - this.y;
+
+		return this;
+
+	},
+
+	dot: function ( v ) {
+
+		return this.x * v.x + this.y * v.y;
+
+	},
+
+	lengthSq: function () {
+
+		return this.x * this.x + this.y * this.y;
+
+	},
+
+	length: function () {
+
+		return Math.sqrt( this.x * this.x + this.y * this.y );
+
+	},
+
+	lengthManhattan: function() {
+
+		return Math.abs( this.x ) + Math.abs( this.y );
+
+	},
+
+	normalize: function () {
+
+		return this.divideScalar( this.length() || 1 );
+
+	},
+
+	angle: function () {
+
+		// computes the angle in radians with respect to the positive x-axis
+
+		var angle = Math.atan2( this.y, this.x );
+
+		if ( angle < 0 ) angle += 2 * Math.PI;
+
+		return angle;
+
+	},
+
+	distanceTo: function ( v ) {
+
+		return Math.sqrt( this.distanceToSquared( v ) );
+
+	},
+
+	distanceToSquared: function ( v ) {
+
+		var dx = this.x - v.x, dy = this.y - v.y;
+		return dx * dx + dy * dy;
+
+	},
+
+	distanceToManhattan: function ( v ) {
+
+		return Math.abs( this.x - v.x ) + Math.abs( this.y - v.y );
+
+	},
+
+	setLength: function ( length ) {
+
+		return this.normalize().multiplyScalar( length );
+
+	},
+
+	lerp: function ( v, alpha ) {
+
+		this.x += ( v.x - this.x ) * alpha;
+		this.y += ( v.y - this.y ) * alpha;
+
+		return this;
+
+	},
+
+	lerpVectors: function ( v1, v2, alpha ) {
+
+		return this.subVectors( v2, v1 ).multiplyScalar( alpha ).add( v1 );
+
+	},
+
+	equals: function ( v ) {
+
+		return ( ( v.x === this.x ) && ( v.y === this.y ) );
+
+	},
+
+	fromArray: function ( array, offset ) {
+
+		if ( offset === undefined ) offset = 0;
+
+		this.x = array[ offset ];
+		this.y = array[ offset + 1 ];
+
+		return this;
+
+	},
+
+	toArray: function ( array, offset ) {
+
+		if ( array === undefined ) array = [];
+		if ( offset === undefined ) offset = 0;
+
+		array[ offset ] = this.x;
+		array[ offset + 1 ] = this.y;
+
+		return array;
+
+	},
+
+	fromBufferAttribute: function ( attribute, index, offset ) {
+
+		if ( offset !== undefined ) {
+
+			console.warn( 'THREE.Vector2: offset has been removed from .fromBufferAttribute().' );
+
+		}
+
+		this.x = attribute.getX( index );
+		this.y = attribute.getY( index );
+
+		return this;
+
+	},
+
+	rotateAround: function ( center, angle ) {
+
+		var c = Math.cos( angle ), s = Math.sin( angle );
+
+		var x = this.x - center.x;
+		var y = this.y - center.y;
+
+		this.x = x * c - y * s + center.x;
+		this.y = x * s + y * c + center.y;
+
+		return this;
+
+	}
+
+} );
+
+
+
 
 
 /***/ })

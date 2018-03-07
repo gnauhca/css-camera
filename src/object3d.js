@@ -96,9 +96,9 @@ export default class Object3D {
     let rotation = this.rotation.clone();
     let scale = this.scale.clone();
 
-    position.y *= -1;
-    rotation.y *= -1;
-    scale.y *= -1;
+    // position.y *= -1;
+    // rotation.y *= -1;
+    // scale.y *= -1;
 
     let scaleMatrix = new Matrix4().makeScale(scale.x, scale.y, scale.z);
     let rotationMatrix = new Matrix4().makeRotationFromEuler(rotation);

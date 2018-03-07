@@ -41,22 +41,22 @@ export default class Box extends Group {
     this.faces.back.elem.style.height = height + 'px';
 
     this.faces.left.setPosition(-width / 2, 0, 0);
-    this.faces.left.rotation.y = CONST.R90;
+    this.faces.left.rotation.y = -CONST.R90;
     this.faces.left.elem.style.width = depth + 'px';
     this.faces.left.elem.style.height = height + 'px';
 
     this.faces.right.setPosition(width / 2, 0, 0);
-    this.faces.right.rotation.y = -CONST.R90;
+    this.faces.right.rotation.y = CONST.R90;
     this.faces.right.elem.style.width = depth + 'px';
     this.faces.right.elem.style.height = height + 'px';
 
     this.faces.top.setPosition(0, height / 2, 0);
-    this.faces.top.rotation.x = CONST.R90;
+    this.faces.top.rotation.x = -CONST.R90;
     this.faces.top.elem.style.width = width + 'px';
     this.faces.top.elem.style.height = depth + 'px';
 
     this.faces.bottom.setPosition(0, -height / 2, 0);
-    this.faces.bottom.rotation.x = -CONST.R90;
+    this.faces.bottom.rotation.x = CONST.R90;
     this.faces.bottom.elem.style.width = width + 'px';
     this.faces.bottom.elem.style.height = depth + 'px';
     this.width = width;

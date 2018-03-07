@@ -42,7 +42,7 @@ export default class Camera {
     this.setNeedUpdate();
   }
 
-  lookAt(x, y, z) {
+  lookAt({x, y, z}) {
     // alias for setLookAt
     this.setLookAt(x, y, z);
   }
@@ -92,9 +92,9 @@ export default class Camera {
     let up = this.up.clone();
     let lookAtPoint = this.lookAtPoint.clone();
 
-    position.y *= -1;
+    // position.y *= -1;
     // up.y *= -1;
-    lookAtPoint.y *= -1;
+    // lookAtPoint.y *= -1;
 
     let translateMatrix = new Matrix4().makeTranslation(position.x, position.y, position.z);
     let viewMatrix = new Matrix4().lookAt(position, lookAtPoint, up);

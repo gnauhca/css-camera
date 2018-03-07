@@ -9,13 +9,15 @@ import AmbientLight from './AmbientLight.js'
 
 import Box from './geometry/Box.js'
 
+import { Vector2 } from './math/Vector2.js';
 import { Vector3 } from './math/Vector3.js';
 import { Matrix4 } from './math/Matrix4.js';
 import { Euler } from './math/Euler.js';
+import { Quaternion } from './math/Quaternion.js';
 
 export {
   Face, Group, Scene, Camera, Renderer, 
   AmbientLight, DirectionLight,
   Box,
-  Vector3, Matrix4, Euler
+  Vector2, Vector3, Matrix4, Euler, Quaternion
 };

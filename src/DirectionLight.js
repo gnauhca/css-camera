@@ -42,7 +42,7 @@ export default class DirectionLight extends Light {
     // overwrite
 
     let lightPosition = this.position.clone();;
-    lightPosition.y *= -1; 
+    // lightPosition.y *= -1; 
 
     let cosOfAngle = lightPosition.dot(normal) / (lightPosition.length() * 1);
     let brightness = 0;

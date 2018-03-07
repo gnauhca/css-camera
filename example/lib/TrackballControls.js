@@ -37,31 +37,31 @@ function TrackballControls( object, domElement ) {
   
     // internals
   
-    this.target = new THREE.Vector3();
+    this.target = new C3.Vector3();
   
     var EPS = 0.000001;
   
-    var lastPosition = new THREE.Vector3();
+    var lastPosition = new C3.Vector3();
   
     var _state = STATE.NONE,
     _prevState = STATE.NONE,
   
-    _eye = new THREE.Vector3(),
+    _eye = new C3.Vector3(),
   
-    _movePrev = new THREE.Vector2(),
-    _moveCurr = new THREE.Vector2(),
+    _movePrev = new C3.Vector2(),
+    _moveCurr = new C3.Vector2(),
   
-    _lastAxis = new THREE.Vector3(),
+    _lastAxis = new C3.Vector3(),
     _lastAngle = 0,
   
-    _zoomStart = new THREE.Vector2(),
-    _zoomEnd = new THREE.Vector2(),
+    _zoomStart = new C3.Vector2(),
+    _zoomEnd = new C3.Vector2(),
   
     _touchZoomDistanceStart = 0,
     _touchZoomDistanceEnd = 0,
   
-    _panStart = new THREE.Vector2(),
-    _panEnd = new THREE.Vector2();
+    _panStart = new C3.Vector2(),
+    _panEnd = new C3.Vector2();
   
     // for reset
   
@@ -113,13 +113,13 @@ function TrackballControls( object, domElement ) {
   
     var getMouseOnScreen = ( function () {
   
-      var vector = new THREE.Vector2();
+      var vector = new C3.Vector2();
   
       return function getMouseOnScreen( pageX, pageY ) {
   
         vector.set(
           ( pageX - _this.screen.left ) / _this.screen.width,
-          ( pageY - _this.screen.top ) / _this.screen.height
+          ( _this.screen.top - pageY ) / _this.screen.height
         );
   
         return vector;
@@ -130,13 +130,13 @@ function TrackballControls( object, domElement ) {
   
     var getMouseOnCircle = ( function () {
   
-      var vector = new THREE.Vector2();
+      var vector = new C3.Vector2();
   
       return function getMouseOnCircle( pageX, pageY ) {
   
         vector.set(
           ( ( pageX - _this.screen.width * 0.5 - _this.screen.left ) / ( _this.screen.width * 0.5 ) ),
-          ( ( _this.screen.height + 2 * ( _this.screen.top - pageY ) ) / _this.screen.width ) // screen.width intentional
+          ( ( _this.screen.height + 2 * ( pageY - _this.screen.top  ) ) / _this.screen.width ) // screen.width intentional
         );
   
         return vector;
@@ -147,19 +147,19 @@ function TrackballControls( object, domElement ) {
   
     this.rotateCamera = ( function() {
   
-      var axis = new THREE.Vector3(),
-        quaternion = new THREE.Quaternion(),
-        eyeDirection = new THREE.Vector3(),
-        objectUpDirection = new THREE.Vector3(),
-        objectSidewaysDirection = new THREE.Vector3(),
-        moveDirection = new THREE.Vector3(),
+      var axis = new C3.Vector3(),
+        quaternion = new C3.Quaternion(),
+        eyeDirection = new C3.Vector3(),
+        objectUpDirection = new C3.Vector3(),
+        objectSidewaysDirection = new C3.Vector3(),
+        moveDirection = new C3.Vector3(),
         angle;
   
       return function rotateCamera() {
   
         moveDirection.set( _moveCurr.x - _movePrev.x, _moveCurr.y - _movePrev.y, 0 );
         angle = moveDirection.length();
-  
+        
         if ( angle ) {
   
           _eye.copy( _this.object.position ).sub( _this.target );
@@ -193,7 +193,7 @@ function TrackballControls( object, domElement ) {
           _this.object.up.applyQuaternion( quaternion );
   
         }
-  
+
         _movePrev.copy( _moveCurr );
   
       };
@@ -237,9 +237,9 @@ function TrackballControls( object, domElement ) {
   
     this.panCamera = ( function() {
   
-      var mouseChange = new THREE.Vector2(),
-        objectUp = new THREE.Vector3(),
-        pan = new THREE.Vector3();
+      var mouseChange = new C3.Vector2(),
+        objectUp = new C3.Vector3(),
+        pan = new C3.Vector3();
   
       return function panCamera() {
   
@@ -323,7 +323,7 @@ function TrackballControls( object, domElement ) {
   
       if ( lastPosition.distanceToSquared( _this.object.position ) > EPS ) {
   
-        _this.dispatchEvent( changeEvent );
+        // _this.dispatchEvent( changeEvent );
   
         lastPosition.copy( _this.object.position );
   
@@ -344,7 +344,7 @@ function TrackballControls( object, domElement ) {
   
       _this.object.lookAt( _this.target );
   
-      _this.dispatchEvent( changeEvent );
+      // _this.dispatchEvent( changeEvent );
   
       lastPosition.copy( _this.object.position );
   
@@ -423,7 +423,7 @@ function TrackballControls( object, domElement ) {
       document.addEventListener( 'mousemove', mousemove, false );
       document.addEventListener( 'mouseup', mouseup, false );
   
-      _this.dispatchEvent( startEvent );
+      // _this.dispatchEvent( startEvent );
   
     }
   
@@ -462,7 +462,7 @@ function TrackballControls( object, domElement ) {
   
       document.removeEventListener( 'mousemove', mousemove );
       document.removeEventListener( 'mouseup', mouseup );
-      _this.dispatchEvent( endEvent );
+      // _this.dispatchEvent( endEvent );
   
     }
   
@@ -494,8 +494,8 @@ function TrackballControls( object, domElement ) {
   
       }
   
-      _this.dispatchEvent( startEvent );
-      _this.dispatchEvent( endEvent );
+      // _this.dispatchEvent( startEvent );
+      // _this.dispatchEvent( endEvent );
   
     }
   
@@ -525,7 +525,7 @@ function TrackballControls( object, domElement ) {
   
       }
   
-      _this.dispatchEvent( startEvent );
+      // _this.dispatchEvent( startEvent );
   
     }
   
@@ -575,7 +575,7 @@ function TrackballControls( object, domElement ) {
   
       }
   
-      _this.dispatchEvent( endEvent );
+      // _this.dispatchEvent( endEvent );
   
     }
   
@@ -622,5 +622,4 @@ function TrackballControls( object, domElement ) {
     this.update();
   
   };
-  
-  export default TrackballControls;
+  C3.TrackballControls = TrackballControls;

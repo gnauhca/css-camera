@@ -20,6 +20,7 @@
 </style>
 <script src="./lib/stats.min.js"></script>
 <script src="../dist/c3.js"></script>
+<script src="./lib/TrackballControls.js"></script>
 </head>
 <body>
 <div class="container">
@@ -41,7 +42,6 @@ camera.setPosition(0, 0, 300);
 camera.setLookAt(0, 0, 0);
 camera.setUp(0, 1, 0);
 
-
 let scene = new C3.Scene(containerElem);
 
 let directionLight = new C3.DirectionLight(new C3.Vector3(10, 0, 0), 1);
@@ -51,11 +51,11 @@ scene.addLight(directionLight2);
 let ambientLight = new C3.AmbientLight(0.2);
 scene.addLight(ambientLight);
 
-
-
 let box = new C3.Box(50, 50, 50, 'rgba(23, 111, 188, 0.9)');
 box.setPosition(0, 0, 0);
-box.rotation.y = 0.93
+// box.rotation.y = 0.93
+
+let controls = new C3.TrackballControls(camera);
 
 scene.add(box);
 
@@ -64,15 +64,17 @@ function tick(){
   stats.update();
 
   cameraRadian += 0.007;
-  camera.setPosition(Math.cos(cameraRadian) * 300, Math.sin(cameraRadian) * 300, Math.sin(cameraRadian) * 300);
-  
-  // camera.setPosition(0, 0, 300);
+  // camera.setPosition(Math.cos(cameraRadian) * 300, Math.sin(cameraRadian) * 300, Math.sin(cameraRadian) * 300);
+  camera.setNeedUpdate();
+  // console.log(camera.position);
+
   renderer.render(scene, camera);
   window.requestAnimationFrame(tick);
   // setTimeout(tick, 500);
 
-  // box.rotation.y += 0.01;
-  // box.setNeedUpdate();
+  // box.rotation.x += 0.01;
+  box.setNeedUpdate();
+  controls.update();
 
 
 }
