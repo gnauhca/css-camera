@@ -8,6 +8,7 @@ import DirectionLight from './DirectionLight.js'
 import AmbientLight from './AmbientLight.js'
 
 import Box from './geometry/Box.js'
+import Sphere from './geometry/Sphere.js'
 
 import { Vector2 } from './math/Vector2.js';
 import { Vector3 } from './math/Vector3.js';
@@ -18,6 +19,6 @@ import { Quaternion } from './math/Quaternion.js';
 export {
   Face, Group, Scene, Camera, Renderer, 
   AmbientLight, DirectionLight,
-  Box,
+  Box, Sphere,
   Vector2, Vector3, Matrix4, Euler, Quaternion
 };

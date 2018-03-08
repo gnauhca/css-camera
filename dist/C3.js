@@ -70,7 +70,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 9);
+/******/ 	return __webpack_require__(__webpack_require__.s = 10);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1828,33 +1828,6 @@ class Group extends __WEBPACK_IMPORTED_MODULE_0__Object3D_js__["a" /* default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__math_Vector3_js__ = __webpack_require__(0);
-
-
-class Light {
-  constructor() {
-    this.updated = true;
-  }
-
-  setNeedUpdate() {
-    this.updated = true;;
-  }
-
-  calBrightness(position, normal, backSide) {
-    // overwrite
-
-    return 0;
-  }
-
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Light;
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Object3D_js__ = __webpack_require__(6);
 
 
@@ -1869,7 +1842,8 @@ class Face extends __WEBPACK_IMPORTED_MODULE_0__Object3D_js__["a" /* default */]
       position: 'absolute',
       top: '50%',
       left: '50%',
-      'backface-visibility': 'hidden'
+      'box-sizing': 'border-box',
+      // 'backface-visibility': 'hidden'
     };
 
     this.elem = elem || document.createElement('div');
@@ -1899,15 +1873,6 @@ class Face extends __WEBPACK_IMPORTED_MODULE_0__Object3D_js__["a" /* default */]
     }
   }
 
-  updateElemMatrix() {
-    if (this.elemMatrixNeedUpdate) {
-      let modelMatrix = this.getModelMatrix().elements.map(num => num.toFixed(6));
-      
-      this.elem.style.transform = `translate(-50%, -50%) matrix3d(${modelMatrix.join(',')})`;
-      this.elemMatrixNeedUpdate = false;
-    }
-  }
-
   updateElemBrightness() {
     if (this.elemLightNeedUpdate) {
       this.elem.style.filter = `brightness(${this.brightness})`;
@@ -1917,6 +1882,33 @@ class Face extends __WEBPACK_IMPORTED_MODULE_0__Object3D_js__["a" /* default */]
 
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Face;
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__math_Vector3_js__ = __webpack_require__(0);
+
+
+class Light {
+  constructor() {
+    this.updated = true;
+  }
+
+  setNeedUpdate() {
+    this.updated = true;;
+  }
+
+  calBrightness(position, normal, backSide) {
+    // overwrite
+
+    return 0;
+  }
+
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Light;
 
 
 /***/ }),
@@ -2692,7 +2684,23 @@ class Object3D {
     this.normalNeedUpdate = false;
     return this.normal.clone();
   }
-  
+
+  setModelMatrix(matrix) {
+    this.modelMatrix = matrix;
+
+    // todos: 根据 matrix 设置 position rotation scale
+
+    this.elemMatrixNeedUpdate = true;
+  }
+
+  updateElemMatrix() {
+    if (this.elemMatrixNeedUpdate) {
+      let modelMatrix = this.getModelMatrix().elements.map(num => num.toFixed(6));
+      this.elem.style.transform = `translate(-50%, -50%) matrix3d(${modelMatrix.join(',')})`;
+      this.elemMatrixNeedUpdate = false;
+    }
+  }
+
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Object3D;
 
@@ -3242,21 +3250,52 @@ Object.assign( Euler.prototype, {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+const R360 = Math.PI * 2;
+/* unused harmony export R360 */
+
+const R180 = Math.PI;
+/* harmony export (immutable) */ __webpack_exports__["a"] = R180;
+
+const R150 = Math.PI * 0.8333333333;
+/* unused harmony export R150 */
+
+const R120 = Math.PI * 0.6666666666;
+/* unused harmony export R120 */
+
+const R90 = Math.PI * 0.5;
+/* harmony export (immutable) */ __webpack_exports__["b"] = R90;
+
+const R60 = Math.PI * 0.3333333333;
+/* unused harmony export R60 */
+
+const R45 = Math.PI * 0.25;
+/* unused harmony export R45 */
+
+const R30 = Math.PI * 0.1666666667;
+/* unused harmony export R30 */
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Face_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Face_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Group_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Scene_js__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Camera_js__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Renderer_js__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Light_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__DirectionLight_js__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__AmbientLight_js__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__geometry_Box_js__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__math_Vector2_js__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__math_Vector3_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__math_Matrix4_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__math_Euler_js__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__math_Quaternion_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Scene_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Camera_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Renderer_js__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Light_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__DirectionLight_js__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__AmbientLight_js__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__geometry_Box_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__geometry_Sphere_js__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__math_Vector2_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__math_Vector3_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__math_Matrix4_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__math_Euler_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__math_Quaternion_js__ = __webpack_require__(5);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Face", function() { return __WEBPACK_IMPORTED_MODULE_0__Face_js__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Group", function() { return __WEBPACK_IMPORTED_MODULE_1__Group_js__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Scene", function() { return __WEBPACK_IMPORTED_MODULE_2__Scene_js__["a"]; });
@@ -3265,11 +3304,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "AmbientLight", function() { return __WEBPACK_IMPORTED_MODULE_7__AmbientLight_js__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "DirectionLight", function() { return __WEBPACK_IMPORTED_MODULE_6__DirectionLight_js__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Box", function() { return __WEBPACK_IMPORTED_MODULE_8__geometry_Box_js__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Vector2", function() { return __WEBPACK_IMPORTED_MODULE_9__math_Vector2_js__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Vector3", function() { return __WEBPACK_IMPORTED_MODULE_10__math_Vector3_js__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Matrix4", function() { return __WEBPACK_IMPORTED_MODULE_11__math_Matrix4_js__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Euler", function() { return __WEBPACK_IMPORTED_MODULE_12__math_Euler_js__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Quaternion", function() { return __WEBPACK_IMPORTED_MODULE_13__math_Quaternion_js__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Sphere", function() { return __WEBPACK_IMPORTED_MODULE_9__geometry_Sphere_js__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Vector2", function() { return __WEBPACK_IMPORTED_MODULE_10__math_Vector2_js__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Vector3", function() { return __WEBPACK_IMPORTED_MODULE_11__math_Vector3_js__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Matrix4", function() { return __WEBPACK_IMPORTED_MODULE_12__math_Matrix4_js__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Euler", function() { return __WEBPACK_IMPORTED_MODULE_13__math_Euler_js__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Quaternion", function() { return __WEBPACK_IMPORTED_MODULE_14__math_Quaternion_js__["a"]; });
+
 
 
 
@@ -3290,12 +3331,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Group_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Light_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Light_js__ = __webpack_require__(4);
 
 
 
@@ -3373,7 +3414,7 @@ class Scene {
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3493,12 +3534,12 @@ class Camera {
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Group_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Face_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Face_js__ = __webpack_require__(3);
 
 
 
@@ -3569,11 +3610,11 @@ class Renderer {
 /* harmony default export */ __webpack_exports__["a"] = (Renderer);
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Light_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Light_js__ = __webpack_require__(4);
 
 
 class DirectionLight extends __WEBPACK_IMPORTED_MODULE_0__Light_js__["a" /* default */] {
@@ -3639,11 +3680,11 @@ class DirectionLight extends __WEBPACK_IMPORTED_MODULE_0__Light_js__["a" /* defa
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Light_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Light_js__ = __webpack_require__(4);
 
 
 class AmbientLight extends __WEBPACK_IMPORTED_MODULE_0__Light_js__["a" /* default */] {
@@ -3668,13 +3709,13 @@ class AmbientLight extends __WEBPACK_IMPORTED_MODULE_0__Light_js__["a" /* defaul
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Face_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Face_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Group_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CONST_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CONST_js__ = __webpack_require__(9);
 
 
 
@@ -3757,37 +3798,137 @@ class Box extends __WEBPACK_IMPORTED_MODULE_1__Group_js__["a" /* default */] {
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-const R360 = Math.PI * 2;
-/* unused harmony export R360 */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Face_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Group_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__math_Vector3_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__math_Matrix4_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__CONST_js__ = __webpack_require__(9);
 
-const R180 = Math.PI;
-/* harmony export (immutable) */ __webpack_exports__["a"] = R180;
 
-const R150 = Math.PI * 0.8333333333;
-/* unused harmony export R150 */
 
-const R120 = Math.PI * 0.6666666666;
-/* unused harmony export R120 */
 
-const R90 = Math.PI * 0.5;
-/* harmony export (immutable) */ __webpack_exports__["b"] = R90;
 
-const R60 = Math.PI * 0.3333333333;
-/* unused harmony export R60 */
 
-const R45 = Math.PI * 0.25;
-/* unused harmony export R45 */
+class Sphere extends __WEBPACK_IMPORTED_MODULE_1__Group_js__["a" /* default */] {
+  constructor(radiusTop, radiusBottom, height, color, radiusSegment) {
+    super();
+    this.radiusBottom = radiusBottom;
+    this.radiusTop = radiusTop;
+    this.height = height;
+    this.color = color;
+    this.radiusSegment = radiusSegment;
 
-const R30 = Math.PI * 0.1666666667;
-/* unused harmony export R30 */
+    this.createFaces(radiusTop, radiusBottom, height, color, radiusSegment);
+  }
+
+  createFaces(radiusTop, radiusBottom, height, color, radiusSegment) {
+
+
+    let segmentRadian = Math.PI * 2 / radiusSegment;
+    let segmentRadianHalf = segmentRadian / 2;
+    let cosSegmentRadianHalf = Math.cos(segmentRadianHalf);
+    let sinSegmentRadianHalf = Math.sin(segmentRadianHalf);
+
+    // 顶面
+    let topTriangleHeight = radiusTop * cosSegmentRadianHalf;
+    let topTriangleWidth = radiusTop * sinSegmentRadianHalf * 2;
+
+    // 底面
+    let bottomTriangleHeight = radiusBottom * cosSegmentRadianHalf;
+    let bottomTriangleWidth = radiusBottom * sinSegmentRadianHalf * 2;
+
+    // sub
+    let endHeightSub = bottomTriangleHeight - topTriangleHeight;
+    let endWidthSub = bottomTriangleWidth - topTriangleWidth;
+    let endWidthSubHalf = endWidthSub / 2;
+
+    console.log(topTriangleHeight, bottomTriangleHeight);
+
+    // 侧面
+    let sideFaceRadian = Math.atan(endHeightSub / height);
+    let sideHeight = height / Math.cos(sideFaceRadian);
+
+    let sideBaseMatrix = new __WEBPACK_IMPORTED_MODULE_3__math_Matrix4_js__["a" /* Matrix4 */]().makeTranslation(0, sideHeight / 2, 0);
+
+    sideBaseMatrix.multiplyMatrices(
+      new __WEBPACK_IMPORTED_MODULE_3__math_Matrix4_js__["a" /* Matrix4 */]().makeRotationX(sideFaceRadian),
+      sideBaseMatrix
+    );
+
+    sideBaseMatrix.multiplyMatrices(
+      new __WEBPACK_IMPORTED_MODULE_3__math_Matrix4_js__["a" /* Matrix4 */]().makeTranslation(0, -height / 2, topTriangleHeight),
+      sideBaseMatrix
+    );
+
+    let sideFaceStyles = {
+      'height': 0,
+      'border-left': `${Math.abs(endWidthSubHalf)}px solid transparent`,
+      'border-right': `${Math.abs(endWidthSubHalf)}px solid transparent`
+    };
+    if (endWidthSub > 0) {
+      Object.assign(sideFaceStyles, {
+        'border-bottom': `${sideHeight}px solid ${color}`,
+        'width': bottomTriangleWidth
+      });
+    } else {
+      Object.assign(sideFaceStyles, {
+        'border-top': `${sideHeight}px solid ${color}`,
+        'width': topTriangleWidth
+      });
+    }
+
+    for (let i = 0; i < radiusSegment; i++) {
+      let sideFace = new __WEBPACK_IMPORTED_MODULE_0__Face_js__["a" /* default */]();
+      let faceMatrix = new __WEBPACK_IMPORTED_MODULE_3__math_Matrix4_js__["a" /* Matrix4 */]().makeRotationAxis(
+        new __WEBPACK_IMPORTED_MODULE_2__math_Vector3_js__["a" /* Vector3 */](0, 1, 0),
+        i * segmentRadian
+      );
+
+      for (let item in sideFaceStyles) {
+        let value = sideFaceStyles[item];
+  
+        if (typeof value === 'number') {
+          value += 'px';
+        }
+  
+        sideFace.elem.style[item] = value;
+      }
+
+
+      faceMatrix.multiplyMatrices(
+        faceMatrix,
+        sideBaseMatrix
+      );
+
+      sideFace.setModelMatrix(faceMatrix);
+      this.add(sideFace);
+    }
+
+
+  }
+
+
+  setColor(color) {
+    if (!color) {
+      return;
+    }
+
+    this.color = color;
+    for (let key in this.faces) {
+      this.faces[key].elem.style.color = color;
+    }
+  }
+
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Sphere;
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

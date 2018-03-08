@@ -144,5 +144,21 @@ export default class Object3D {
     this.normalNeedUpdate = false;
     return this.normal.clone();
   }
-  
+
+  setModelMatrix(matrix) {
+    this.modelMatrix = matrix;
+
+    // todos: 根据 matrix 设置 position rotation scale
+
+    this.elemMatrixNeedUpdate = true;
+  }
+
+  updateElemMatrix() {
+    if (this.elemMatrixNeedUpdate) {
+      let modelMatrix = this.getModelMatrix().elements.map(num => num.toFixed(6));
+      this.elem.style.transform = `translate(-50%, -50%) matrix3d(${modelMatrix.join(',')})`;
+      this.elemMatrixNeedUpdate = false;
+    }
+  }
+
 }

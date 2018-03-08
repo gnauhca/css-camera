@@ -11,7 +11,8 @@ export default class Face extends Object3D {
       position: 'absolute',
       top: '50%',
       left: '50%',
-      'backface-visibility': 'hidden'
+      'box-sizing': 'border-box',
+      // 'backface-visibility': 'hidden'
     };
 
     this.elem = elem || document.createElement('div');
@@ -38,15 +39,6 @@ export default class Face extends Object3D {
     if (this.brightness !== brightness) {
       this.brightness = brightness;
       this.elemLightNeedUpdate = true;
-    }
-  }
-
-  updateElemMatrix() {
-    if (this.elemMatrixNeedUpdate) {
-      let modelMatrix = this.getModelMatrix().elements.map(num => num.toFixed(6));
-      
-      this.elem.style.transform = `translate(-50%, -50%) matrix3d(${modelMatrix.join(',')})`;
-      this.elemMatrixNeedUpdate = false;
     }
   }
 

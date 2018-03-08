@@ -47,20 +47,42 @@ let scene = new C3.Scene(containerElem);
 
 let directionLight = new C3.DirectionLight(new C3.Vector3(10, 0, 0), 1);
 scene.addLight(directionLight);
-let directionLight2 = new C3.DirectionLight(new C3.Vector3(-5, 10, 0), 1);
-scene.addLight(directionLight2);
-let ambientLight = new C3.AmbientLight(0.2);
+// let directionLight2 = new C3.DirectionLight(new C3.Vector3(-5, 10, 0), 1);
+// scene.addLight(directionLight2);
+let ambientLight = new C3.AmbientLight(0.1);
 scene.addLight(ambientLight);
 
-let box = new C3.Box(50, 50, 50, 'rgba(23, 111, 188, 0.9)');
-box.setPosition(0, 0, 0);
-// box.rotation.y = 0.93
+let sphere = new C3.Sphere(40, 0, 80, '#abcdef', 36);
+sphere.setPosition(0, 0, 0);
+scene.add(sphere);
+
+let objs = [];
+let objWidthCount = 6;
+let objWidthCountHalf = objWidthCount / 2;
+
+// for (let x = 0; x < objWidthCount; x++) {
+//   for (let y = 0; y < objWidthCount; y++) {
+//     let topRadius = 10 * Math.random();
+//     let bottomRadius = 10 * Math.random();
+//     let height = 20 * Math.random();
+//     let segment = 6;
+//     let color = `rgba(${(Math.random() * 255) | 0}, ${(Math.random() * 255) | 0}, ${(Math.random() * 255) | 0}, ${(Math.random().toFixed(6))})`;
+//     let count = x * objWidthCount + y
+    
+    
+//     objs[count] = new C3.Sphere(topRadius, bottomRadius, height, color, segment);
+//     objs[count].setPosition((x - objWidthCountHalf) * 30, (y - objWidthCountHalf) * 30, (Math.random() - 0.5) * 300 );
+    
+//     objs[count].rotationAdd = [Math.random() * 0.06, Math.random() * 0.06, Math.random() * 0.06];
+    
+//     scene.add(objs[count]);
+//   }
+// }
 
 let controls = new C3.TrackballControls(camera);
 controls.rotateSpeed = 3.0;
 controls.zoomSpeed = 1.2;
 controls.panSpeed = 0.3;
-scene.add(box);
 
 let cameraRadian = 0;
 function tick(){
@@ -75,8 +97,6 @@ function tick(){
   window.requestAnimationFrame(tick);
   // setTimeout(tick, 500);
 
-  // box.rotation.x += 0.01;
-  box.setNeedUpdate();
   controls.update();
 
 
