@@ -54,6 +54,7 @@ export default class DirectionLight extends Light {
     }
 
     // console.log(brightness);
+    brightness *= this.intensity; 
 
     return brightness;
   }

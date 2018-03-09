@@ -70,7 +70,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 10);
+/******/ 	return __webpack_require__(__webpack_require__.s = 11);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -79,7 +79,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Vector3; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Math__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Math__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Matrix4__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Quaternion__ = __webpack_require__(5);
 
@@ -1760,7 +1760,9 @@ Object.assign( Matrix4.prototype, {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Object3D_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Object3D_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util_util_js__ = __webpack_require__(6);
+
 
 
 class Group extends __WEBPACK_IMPORTED_MODULE_0__Object3D_js__["a" /* default */] {
@@ -1771,22 +1773,15 @@ class Group extends __WEBPACK_IMPORTED_MODULE_0__Object3D_js__["a" /* default */
     this.children = [];
     this.elem = document.createElement('div');
 
-    const defaultStyle = {
+    const groupStyle = {
       position: 'absolute',
       top: '50%',
       left: '50%',
       'transform-style': 'preserve-3d'
     };
 
-    for (let item in defaultStyle) {
-      let value = defaultStyle[item];
-
-      if (typeof value === 'number') {
-        value += 'px';
-      }
-
-      this.elem.style[item] = value;
-    }
+    __WEBPACK_IMPORTED_MODULE_1__util_util_js__["a" /* setStyles */](this.elem, groupStyle);
+    
   }
 
   setNeedUpdate() {
@@ -1809,14 +1804,14 @@ class Group extends __WEBPACK_IMPORTED_MODULE_0__Object3D_js__["a" /* default */
     }
   }
 
-  updateElemMatrix() {
-    if (this.elemMatrixNeedUpdate) {
-      let modelMatrix = this.getModelMatrix().elements.map(num => num.toFixed(6));
+  // updateElemMatrix() {
+  //   if (this.elemMatrixNeedUpdate) {
+  //     let modelMatrix = this.getModelMatrix().elements.map(num => num.toFixed(6));
       
-      this.elem.style.transform = `translate(-50%, -50%) matrix3d(${modelMatrix.join(',')})`;
-      this.elemMatrixNeedUpdate = false;
-    }
-  }
+  //     this.elem.style.transform = `translate(-50%, -50%) matrix3d(${modelMatrix.join(',')})`;
+  //     this.elemMatrixNeedUpdate = false;
+  //   }
+  // }
 
 
 }
@@ -1828,7 +1823,9 @@ class Group extends __WEBPACK_IMPORTED_MODULE_0__Object3D_js__["a" /* default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Object3D_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Object3D_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util_util_js__ = __webpack_require__(6);
+
 
 
 class Face extends __WEBPACK_IMPORTED_MODULE_0__Object3D_js__["a" /* default */] {
@@ -1842,21 +1839,14 @@ class Face extends __WEBPACK_IMPORTED_MODULE_0__Object3D_js__["a" /* default */]
       position: 'absolute',
       top: '50%',
       left: '50%',
+      overflow: 'hidden',
       'box-sizing': 'border-box',
-      // 'backface-visibility': 'hidden'
+      'backface-visibility': 'hidden'
     };
 
     this.elem = elem || document.createElement('div');
 
-    for (let item in faceStyles) {
-      let value = faceStyles[item];
-
-      if (typeof value === 'number') {
-        value += 'px';
-      }
-
-      this.elem.style[item] = value;
-    }
+    __WEBPACK_IMPORTED_MODULE_1__util_util_js__["a" /* setStyles */](this.elem, faceStyles);
     
   }
 
@@ -2535,9 +2525,27 @@ Object.assign( Quaternion.prototype, {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = setStyles;
+function setStyles(elem, styles) {
+  for (let item in styles) {
+    let value = styles[item];
+
+    if (typeof value === 'number') {
+      value += 'px';
+    }
+
+    elem.style[item] = value;
+  }
+}
+
+/***/ }),
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__math_Vector3_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__math_Matrix4_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__math_Euler_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__math_Euler_js__ = __webpack_require__(9);
 
 
 
@@ -2706,7 +2714,7 @@ class Object3D {
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2882,7 +2890,7 @@ var _Math = {
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2890,7 +2898,7 @@ var _Math = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Quaternion__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Vector3__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Matrix4__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Math__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Math__ = __webpack_require__(8);
 
 
 
@@ -3246,7 +3254,7 @@ Object.assign( Euler.prototype, {
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3276,25 +3284,25 @@ const R30 = Math.PI * 0.1666666667;
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Face_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Group_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Scene_js__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Camera_js__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Renderer_js__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Scene_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Camera_js__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Renderer_js__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Light_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__DirectionLight_js__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__AmbientLight_js__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__geometry_Box_js__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__geometry_Sphere_js__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__math_Vector2_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__DirectionLight_js__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__AmbientLight_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__geometry_Box_js__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__geometry_Cylinder_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__math_Vector2_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__math_Vector3_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__math_Matrix4_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__math_Euler_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__math_Euler_js__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__math_Quaternion_js__ = __webpack_require__(5);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Face", function() { return __WEBPACK_IMPORTED_MODULE_0__Face_js__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Group", function() { return __WEBPACK_IMPORTED_MODULE_1__Group_js__["a"]; });
@@ -3304,7 +3312,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "AmbientLight", function() { return __WEBPACK_IMPORTED_MODULE_7__AmbientLight_js__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "DirectionLight", function() { return __WEBPACK_IMPORTED_MODULE_6__DirectionLight_js__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Box", function() { return __WEBPACK_IMPORTED_MODULE_8__geometry_Box_js__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Sphere", function() { return __WEBPACK_IMPORTED_MODULE_9__geometry_Sphere_js__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Cylinder", function() { return __WEBPACK_IMPORTED_MODULE_9__geometry_Cylinder_js__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Vector2", function() { return __WEBPACK_IMPORTED_MODULE_10__math_Vector2_js__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Vector3", function() { return __WEBPACK_IMPORTED_MODULE_11__math_Vector3_js__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Matrix4", function() { return __WEBPACK_IMPORTED_MODULE_12__math_Matrix4_js__["a"]; });
@@ -3331,7 +3339,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3372,11 +3380,9 @@ class Scene {
 
     this.container.appendChild(this.viewWrapper);
     this.objs = [];
-
     this.lights = [];
-    this.ambientLightIntensity = 0;
 
-    this.container.style.perspective = this.container.offsetHeight / 2 + 'px';
+    this.sizeUpdated = true;
   }
 
   add(obj) {
@@ -3408,13 +3414,14 @@ class Scene {
   resize() {
     this.width = this.container.offsetWidth;
     this.height = this.container.offsetHeight;
+    this.sizeUpdated = true;
   }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Scene;
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3433,6 +3440,12 @@ class Camera {
     this.viewMatrix = new __WEBPACK_IMPORTED_MODULE_1__math_Matrix4_js__["a" /* Matrix4 */]();
 
     this.fov = fov;
+    this.configUpdated = true;
+  }
+
+  setFov(fov) {
+    this.fov = fov;
+    this.configUpdated = true;
   }
 
   setNeedUpdate() {
@@ -3534,7 +3547,7 @@ class Camera {
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3579,11 +3592,28 @@ class Renderer {
 
 
   render(scene, camera) {
+    let viewMatrixUpdated = camera.viewMatrixNeedUpdate;
     let viewMatrix = camera.getViewMatrix().elements.map(num => num.toFixed(6));
-    let perspective = scene.height / 2 / Math.tan(camera.fov / 2);
-    scene.container.style.perspective = perspective + 'px';
-  
-    scene.viewWrapper.style.transform = `translateZ(${perspective}px) matrix3d(${viewMatrix.join(',')})`;
+
+    let perspectiveUpdated;
+
+    if (scene.sizeUpdated || camera.configUpdated) {
+      let perspective = scene.height / 2 / Math.tan(camera.fov / 2);
+      perspectiveUpdated = true;
+      if (camera.fov) {
+        scene.container.style.perspective = `${perspective}px`;
+      }
+
+      scene.sizeUpdated = false;
+      camera.configUpdated = false;
+    }
+
+    if (perspectiveUpdated || viewMatrixUpdated) {
+      let perspective = scene.height / 2 / Math.tan(camera.fov / 2);
+      
+      scene.viewWrapper.style.transform = `translateZ(${perspective}px) matrix3d(${viewMatrix.join(',')})`;
+    }
+    
   
     // 光照处理
     let lightsUpdated = false;
@@ -3610,7 +3640,7 @@ class Renderer {
 /* harmony default export */ __webpack_exports__["a"] = (Renderer);
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3671,6 +3701,7 @@ class DirectionLight extends __WEBPACK_IMPORTED_MODULE_0__Light_js__["a" /* defa
     }
 
     // console.log(brightness);
+    brightness *= this.intensity; 
 
     return brightness;
   }
@@ -3680,7 +3711,7 @@ class DirectionLight extends __WEBPACK_IMPORTED_MODULE_0__Light_js__["a" /* defa
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3709,13 +3740,13 @@ class AmbientLight extends __WEBPACK_IMPORTED_MODULE_0__Light_js__["a" /* defaul
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Face_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Group_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CONST_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CONST_js__ = __webpack_require__(10);
 
 
 
@@ -3740,10 +3771,11 @@ class Box extends __WEBPACK_IMPORTED_MODULE_1__Group_js__["a" /* default */] {
 
     for (let key in this.faces) {
       this.faces[key].elem.style.background = color;
-      this.faces[key].elem.style.fontSize = '12px';
+      this.faces[key].elem.style.fontSize = '60px';
+      this.faces[key].elem.style.color = 'red';
       this.faces[key].elem.style.textAlign = 'center';
       // this.faces[key].elem.innerHTML = '<span>CSS camera<span>';
-      this.faces[key].elem.innerHTML = 'css';
+      this.faces[key].elem.innerHTML = 'css css css css css css';
       this.add(this.faces[key]);
     }
   }
@@ -3798,7 +3830,7 @@ class Box extends __WEBPACK_IMPORTED_MODULE_1__Group_js__["a" /* default */] {
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3806,26 +3838,30 @@ class Box extends __WEBPACK_IMPORTED_MODULE_1__Group_js__["a" /* default */] {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Group_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__math_Vector3_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__math_Matrix4_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__CONST_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__CONST_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__util_util_js__ = __webpack_require__(6);
 
 
 
 
 
 
-class Sphere extends __WEBPACK_IMPORTED_MODULE_1__Group_js__["a" /* default */] {
-  constructor(radiusTop, radiusBottom, height, color, radiusSegment) {
+
+class Cylinder extends __WEBPACK_IMPORTED_MODULE_1__Group_js__["a" /* default */] {
+  constructor(radiusTop, radiusBottom, height, radiusSegment, sideBackground, topBackground, bottomBackground) {
     super();
     this.radiusBottom = radiusBottom;
     this.radiusTop = radiusTop;
     this.height = height;
-    this.color = color;
+    this.sideBackground = sideBackground;
+    this.topBackground = topBackground;
+    this.bottomBackground = bottomBackground;
     this.radiusSegment = radiusSegment;
 
-    this.createFaces(radiusTop, radiusBottom, height, color, radiusSegment);
+    this.createFaces(radiusTop, radiusBottom, height, radiusSegment, sideBackground, topBackground, bottomBackground);
   }
 
-  createFaces(radiusTop, radiusBottom, height, color, radiusSegment) {
+  createFaces(radiusTop, radiusBottom, height, radiusSegment, sideBackground, topBackground, bottomBackground) {
 
 
     let segmentRadian = Math.PI * 2 / radiusSegment;
@@ -3841,12 +3877,15 @@ class Sphere extends __WEBPACK_IMPORTED_MODULE_1__Group_js__["a" /* default */] 
     let bottomTriangleHeight = radiusBottom * cosSegmentRadianHalf;
     let bottomTriangleWidth = radiusBottom * sinSegmentRadianHalf * 2;
 
+    let maxTriangleWidth = Math.max(topTriangleWidth, bottomTriangleWidth);
+
     // sub
     let endHeightSub = bottomTriangleHeight - topTriangleHeight;
     let endWidthSub = bottomTriangleWidth - topTriangleWidth;
     let endWidthSubHalf = endWidthSub / 2;
+    let endWidthSubHalfAbs = Math.abs(endWidthSubHalf);
 
-    console.log(topTriangleHeight, bottomTriangleHeight);
+    // console.log(topTriangleHeight, bottomTriangleHeight);
 
     // 侧面
     let sideFaceRadian = Math.atan(endHeightSub / height);
@@ -3865,18 +3904,22 @@ class Sphere extends __WEBPACK_IMPORTED_MODULE_1__Group_js__["a" /* default */] 
     );
 
     let sideFaceStyles = {
-      'height': 0,
-      'border-left': `${Math.abs(endWidthSubHalf)}px solid transparent`,
-      'border-right': `${Math.abs(endWidthSubHalf)}px solid transparent`
+      'height': sideHeight,
+      'background': sideBackground,
+      'background-size': `auto ${sideHeight}px`
     };
     if (endWidthSub > 0) {
       Object.assign(sideFaceStyles, {
-        'border-bottom': `${sideHeight}px solid ${color}`,
+        '-webkit-clip-path': `polygon(0 100%, ${endWidthSubHalfAbs}px 0, ${Math.abs(bottomTriangleWidth)-endWidthSubHalfAbs}px 0, 100% 100%)`,
         'width': bottomTriangleWidth
+      });
+    } else if (endWidthSub < 0) {
+      Object.assign(sideFaceStyles, {
+        '-webkit-clip-path': `polygon(0 0, ${endWidthSubHalfAbs}px 100%, ${Math.abs(topTriangleWidth)-endWidthSubHalfAbs}px 100%, 100% 0%)`,
+        'width': topTriangleWidth
       });
     } else {
       Object.assign(sideFaceStyles, {
-        'border-top': `${sideHeight}px solid ${color}`,
         'width': topTriangleWidth
       });
     }
@@ -3888,16 +3931,9 @@ class Sphere extends __WEBPACK_IMPORTED_MODULE_1__Group_js__["a" /* default */] 
         i * segmentRadian
       );
 
-      for (let item in sideFaceStyles) {
-        let value = sideFaceStyles[item];
-  
-        if (typeof value === 'number') {
-          value += 'px';
-        }
-  
-        sideFace.elem.style[item] = value;
-      }
 
+      __WEBPACK_IMPORTED_MODULE_5__util_util_js__["a" /* setStyles */](sideFace.elem, sideFaceStyles);
+      sideFace.elem.style['background-position'] = `${-maxTriangleWidth * i}px 0`
 
       faceMatrix.multiplyMatrices(
         faceMatrix,
@@ -3905,30 +3941,81 @@ class Sphere extends __WEBPACK_IMPORTED_MODULE_1__Group_js__["a" /* default */] 
       );
 
       sideFace.setModelMatrix(faceMatrix);
+      // sideFace.elem.innerHTML = 'css css css css css css css css css css css css css css css css css css css css css css css css css '
       this.add(sideFace);
     }
 
 
+    // 顶面
+    let topVertices = [];
+    let bottomVertices = [];
+    let topStyles = {
+      width: radiusTop * 2,
+      height: radiusTop * 2,
+      background: topBackground,
+      'background-size': '100% 100%'
+    };
+    let bottomStyles = {
+      width: radiusBottom * 2,
+      height: radiusBottom * 2,
+      background: bottomBackground,
+      'background-size': '100%'
+    };
+    let startRadian = -segmentRadianHalf - __WEBPACK_IMPORTED_MODULE_4__CONST_js__["b" /* R90 */];
+
+    for (let i = 0; i < radiusSegment; i++) {
+      let currentRadian = startRadian - i * segmentRadian;
+      topVertices.push([
+        Math.cos(currentRadian) * radiusTop + radiusTop,
+        Math.sin(currentRadian) * radiusTop + radiusTop
+      ]);
+      bottomVertices.push([
+        Math.cos(currentRadian) * radiusBottom + radiusBottom,
+        Math.sin(currentRadian) * radiusBottom + radiusBottom
+      ]);
+    }
+
+    let topClipStyle = topVertices.map(vertice => { return `${vertice[0]}px ${vertice[1]}px` }).join(',');
+    let bottomClipStyle = bottomVertices.map(vertice => { return `${vertice[0]}px ${vertice[1]}px` }).join(',');
+    Object.assign(topStyles, { '-webkit-clip-path': `polygon(${topClipStyle})`} );
+    Object.assign(bottomStyles, { '-webkit-clip-path': `polygon(${bottomClipStyle})`} );
+
+    let topFace = new __WEBPACK_IMPORTED_MODULE_0__Face_js__["a" /* default */]();
+    let bottomFace = new __WEBPACK_IMPORTED_MODULE_0__Face_js__["a" /* default */]();
+
+    topFace.setPosition(0, -height / 2, 0);
+    topFace.setRotation(__WEBPACK_IMPORTED_MODULE_4__CONST_js__["b" /* R90 */], 0, 0);
+
+    bottomFace.setPosition(0, height / 2, 0);
+    bottomFace.setRotation(-__WEBPACK_IMPORTED_MODULE_4__CONST_js__["b" /* R90 */], 0, 0);
+
+
+    __WEBPACK_IMPORTED_MODULE_5__util_util_js__["a" /* setStyles */](topFace.elem, topStyles);
+    __WEBPACK_IMPORTED_MODULE_5__util_util_js__["a" /* setStyles */](bottomFace.elem, bottomStyles);
+
+    this.add(topFace);
+    this.add(bottomFace);
+
   }
 
 
-  setColor(color) {
-    if (!color) {
+  setbackground(background) {
+    if (!background) {
       return;
     }
 
-    this.color = color;
+    this.background = background;
     for (let key in this.faces) {
-      this.faces[key].elem.style.color = color;
+      this.faces[key].elem.style.background = background;
     }
   }
 
 }
-/* harmony export (immutable) */ __webpack_exports__["a"] = Sphere;
+/* harmony export (immutable) */ __webpack_exports__["a"] = Cylinder;
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

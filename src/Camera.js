@@ -11,6 +11,12 @@ export default class Camera {
     this.viewMatrix = new Matrix4();
 
     this.fov = fov;
+    this.configUpdated = true;
+  }
+
+  setFov(fov) {
+    this.fov = fov;
+    this.configUpdated = true;
   }
 
   setNeedUpdate() {

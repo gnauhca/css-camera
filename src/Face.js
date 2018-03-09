@@ -1,4 +1,5 @@
 import Object3D from './Object3D.js';
+import * as util from './util/util.js';
 
 export default class Face extends Object3D {
   constructor(elem) {
@@ -11,21 +12,14 @@ export default class Face extends Object3D {
       position: 'absolute',
       top: '50%',
       left: '50%',
+      overflow: 'hidden',
       'box-sizing': 'border-box',
-      // 'backface-visibility': 'hidden'
+      'backface-visibility': 'hidden'
     };
 
     this.elem = elem || document.createElement('div');
 
-    for (let item in faceStyles) {
-      let value = faceStyles[item];
-
-      if (typeof value === 'number') {
-        value += 'px';
-      }
-
-      this.elem.style[item] = value;
-    }
+    util.setStyles(this.elem, faceStyles);
     
   }
 

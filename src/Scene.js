@@ -33,11 +33,9 @@ export default class Scene {
 
     this.container.appendChild(this.viewWrapper);
     this.objs = [];
-
     this.lights = [];
-    this.ambientLightIntensity = 0;
 
-    this.container.style.perspective = this.container.offsetHeight / 2 + 'px';
+    this.sizeUpdated = true;
   }
 
   add(obj) {
@@ -69,5 +67,6 @@ export default class Scene {
   resize() {
     this.width = this.container.offsetWidth;
     this.height = this.container.offsetHeight;
+    this.sizeUpdated = true;
   }
 }

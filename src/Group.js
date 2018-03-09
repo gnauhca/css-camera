@@ -1,4 +1,5 @@
 import Object3D from './Object3D.js';
+import * as util from './util/util.js';
 
 export default class Group extends Object3D {
   constructor() {
@@ -8,22 +9,15 @@ export default class Group extends Object3D {
     this.children = [];
     this.elem = document.createElement('div');
 
-    const defaultStyle = {
+    const groupStyle = {
       position: 'absolute',
       top: '50%',
       left: '50%',
       'transform-style': 'preserve-3d'
     };
 
-    for (let item in defaultStyle) {
-      let value = defaultStyle[item];
-
-      if (typeof value === 'number') {
-        value += 'px';
-      }
-
-      this.elem.style[item] = value;
-    }
+    util.setStyles(this.elem, groupStyle);
+    
   }
 
   setNeedUpdate() {

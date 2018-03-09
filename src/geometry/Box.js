@@ -22,10 +22,11 @@ export default class Box extends Group {
 
     for (let key in this.faces) {
       this.faces[key].elem.style.background = color;
-      this.faces[key].elem.style.fontSize = '12px';
+      this.faces[key].elem.style.fontSize = '60px';
+      this.faces[key].elem.style.color = 'red';
       this.faces[key].elem.style.textAlign = 'center';
       // this.faces[key].elem.innerHTML = '<span>CSS camera<span>';
-      this.faces[key].elem.innerHTML = 'css';
+      this.faces[key].elem.innerHTML = 'css css css css css css';
       this.add(this.faces[key]);
     }
   }

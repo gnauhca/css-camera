@@ -37,11 +37,28 @@ class Renderer {
 
 
   render(scene, camera) {
+    let viewMatrixUpdated = camera.viewMatrixNeedUpdate;
     let viewMatrix = camera.getViewMatrix().elements.map(num => num.toFixed(6));
-    let perspective = scene.height / 2 / Math.tan(camera.fov / 2);
-    scene.container.style.perspective = perspective + 'px';
-  
-    scene.viewWrapper.style.transform = `translateZ(${perspective}px) matrix3d(${viewMatrix.join(',')})`;
+
+    let perspectiveUpdated;
+
+    if (scene.sizeUpdated || camera.configUpdated) {
+      let perspective = scene.height / 2 / Math.tan(camera.fov / 2);
+      perspectiveUpdated = true;
+      if (camera.fov) {
+        scene.container.style.perspective = `${perspective}px`;
+      }
+
+      scene.sizeUpdated = false;
+      camera.configUpdated = false;
+    }
+
+    if (perspectiveUpdated || viewMatrixUpdated) {
+      let perspective = scene.height / 2 / Math.tan(camera.fov / 2);
+      
+      scene.viewWrapper.style.transform = `translateZ(${perspective}px) matrix3d(${viewMatrix.join(',')})`;
+    }
+    
   
     // 光照处理
     let lightsUpdated = false;
