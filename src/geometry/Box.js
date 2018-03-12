@@ -26,7 +26,7 @@ export default class Box extends Group {
       this.faces[key].elem.style.color = 'red';
       this.faces[key].elem.style.textAlign = 'center';
       // this.faces[key].elem.innerHTML = '<span>CSS camera<span>';
-      this.faces[key].elem.innerHTML = 'css css css css css css';
+      // this.faces[key].elem.innerHTML = 'css css css css css css';
       this.add(this.faces[key]);
     }
   }

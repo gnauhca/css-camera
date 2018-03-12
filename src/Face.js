@@ -14,7 +14,7 @@ export default class Face extends Object3D {
       left: '50%',
       overflow: 'hidden',
       'box-sizing': 'border-box',
-      'backface-visibility': 'hidden'
+      // 'backface-visibility': 'hidden'
     };
 
     this.elem = elem || document.createElement('div');

@@ -17,6 +17,7 @@ export default class Object3D {
     this.normalNeedUpdate = false;
 
     this.elem = null;
+    this.userData = {};
   }
 
   setNeedUpdate() {
@@ -105,6 +106,7 @@ export default class Object3D {
     let translateMatrix = new Matrix4().makeTranslation(position.x, position.y, position.z);
 
     let modelMatrix = translateMatrix.multiply(rotationMatrix).multiply(scaleMatrix);
+    // let modelMatrix = rotationMatrix.multiply(translateMatrix).multiply(scaleMatrix);
 
     this.modelMatrix = modelMatrix.clone();
     this.modelMatrixNeedUpdate = false;

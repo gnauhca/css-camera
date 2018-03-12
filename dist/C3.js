@@ -1841,7 +1841,7 @@ class Face extends __WEBPACK_IMPORTED_MODULE_0__Object3D_js__["a" /* default */]
       left: '50%',
       overflow: 'hidden',
       'box-sizing': 'border-box',
-      'backface-visibility': 'hidden'
+      // 'backface-visibility': 'hidden'
     };
 
     this.elem = elem || document.createElement('div');
@@ -2565,6 +2565,7 @@ class Object3D {
     this.normalNeedUpdate = false;
 
     this.elem = null;
+    this.userData = {};
   }
 
   setNeedUpdate() {
@@ -2653,6 +2654,7 @@ class Object3D {
     let translateMatrix = new __WEBPACK_IMPORTED_MODULE_1__math_Matrix4_js__["a" /* Matrix4 */]().makeTranslation(position.x, position.y, position.z);
 
     let modelMatrix = translateMatrix.multiply(rotationMatrix).multiply(scaleMatrix);
+    // let modelMatrix = rotationMatrix.multiply(translateMatrix).multiply(scaleMatrix);
 
     this.modelMatrix = modelMatrix.clone();
     this.modelMatrixNeedUpdate = false;
@@ -3775,7 +3777,7 @@ class Box extends __WEBPACK_IMPORTED_MODULE_1__Group_js__["a" /* default */] {
       this.faces[key].elem.style.color = 'red';
       this.faces[key].elem.style.textAlign = 'center';
       // this.faces[key].elem.innerHTML = '<span>CSS camera<span>';
-      this.faces[key].elem.innerHTML = 'css css css css css css';
+      // this.faces[key].elem.innerHTML = 'css css css css css css';
       this.add(this.faces[key]);
     }
   }

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>text</title>
+  <style>
+    body {
+      background: black;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border: 1px solid red;
+    }
+
+    .face {
+      /* font-size: 50px; */
+      color: #abcdef;
+      font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+    }
+  </style>
+  <script src="./lib/stats.min.js"></script>
+  <script src="../dist/c3.js"></script>
+  <script src="./lib/TrackballControls.js"></script>
+  <script src="./lib/tween.js"></script>
+</head>
+
+<body>
+  <div class="container">
+
+  </div>
+
+  <script>
+    let stats = new Stats();
+    document.body.appendChild(stats.dom);
+
+    let renderer = new C3.Renderer({
+      lightEffect: true
+    });
+
+    let containerElem = document.querySelector('.container');
+    let camera = new C3.Camera(Math.PI / 4);
+
+    camera.setPosition(0, 0, 800);
+    camera.setLookAt(0, 0, 0);
+    camera.setUp(0, 1, 0);
+
+    let scene = new C3.Scene(containerElem);
+
+    let directionLight = new C3.DirectionLight(new C3.Vector3(-10, 0, 10), 1);
+    scene.addLight(directionLight);
+    let directionLight2 = new C3.DirectionLight(new C3.Vector3(2, -10, 10), 0.4);
+    // scene.addLight(directionLight2);
+    let ambientLight = new C3.AmbientLight(0.3);
+    scene.addLight(ambientLight);
+
+    let textSize = 40;
+    let str = 'ARE YOU SURE?';
+    let texts = str.split('');
+    let faces = [];
+    let faceGroup = new C3.Group();
+
+    for (let i = 0; i < texts.length; i++) {
+      faces[i] = new C3.Face();
+      faces[i].position.y = -10000;
+      faces[i].setNeedUpdate();
+      faces[i].elem.className = 'face';
+      faces[i].elem.style.fontSize = textSize + 'px';
+      faces[i].elem.innerHTML = texts[i];
+      faces[i].userData.initPosition = new C3.Vector3(textSize * 1 * (i - (texts.length) / 2), -textSize * 8 * (Math.random() * 0.3 + 0.7), textSize * 5 * (Math.random() - 0.5));
+      faces[i].userData.initRotation = new C3.Vector3(
+        (Math.random() - 0.5) * 3.14 * 3,
+        (Math.random() - 0.5) * 3.14 * 3,
+        (Math.random() - 0.5) * 3.14 * 3
+      );
+
+      faces[i].userData.finalPosition = new C3.Vector3(faces[i].userData.initPosition.x, 0, 0);
+      faces[i].userData.finalRotation = new C3.Vector3(0, 0, 0);
+
+      faces[i].tween = new TWEEN.Tween({ p: 0 })
+      .to({ p: 1 }, 2500)
+      .easing(TWEEN.Easing.Elastic.Out)
+      .delay(i * 100)
+      .onUpdate((function(face) {
+        return function(t) {
+          let aniPercent = t.p;
+
+          let pSub = new C3.Vector3().subVectors(face.userData.finalPosition, face.userData.initPosition);
+          let rSub = new C3.Vector3().subVectors(face.userData.finalRotation, face.userData.initRotation);
+          let rotationVec = new C3.Vector3();
+
+          face.position = new C3.Vector3().addVectors(
+            face.userData.initPosition,
+            pSub.clone().setLength(pSub.length() * aniPercent)
+          );
+          rotationVec.addVectors(
+            face.userData.initRotation,
+            rSub.clone().setLength(rSub.length() * aniPercent)
+          );
+          face.rotation = new C3.Euler(rotationVec.x, rotationVec.y, rotationVec.z);
+
+          face.setNeedUpdate();
+        }
+      })(faces[i]))
+      .start();
+
+      faceGroup.add(faces[i]);
+    }
+    scene.add(faceGroup);
+
+
+
+
+    let controls = new C3.TrackballControls(camera);
+    controls.rotateSpeed = 3.0;
+    controls.zoomSpeed = 1.2;
+    controls.panSpeed = 0.3;
+
+    function tick() {
+
+      stats.update();
+
+      renderer.render(scene, camera);
+      window.requestAnimationFrame(tick);
+
+
+      TWEEN.update();
+      camera.setNeedUpdate();
+      controls.update();
+
+
+    }
+    renderer.render(scene, camera);
+    tick();
+// console.log(C3);
+
+
+  </script>
+</body>
+
+</html>

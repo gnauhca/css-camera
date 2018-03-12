@@ -43,7 +43,7 @@ let renderer = new C3.Renderer({
 let containerElem = document.querySelector('.container');
 let camera = new C3.Camera(Math.PI / 4);
 
-camera.setPosition(0, 0, 36000);
+camera.setPosition(0, 0, 6000);
 camera.setLookAt(0, 0, 0);
 camera.setUp(0, 1, 0);
 
@@ -60,9 +60,9 @@ let cylinder = new C3.Cylinder(300, 300, 1082, 10, 'url(./image/可口可乐.png
 cylinder.setPosition(0, 0, 0);
 scene.add(cylinder);
 
-let objs = [];
-let objWidthCount = 6;
-let objWidthCountHalf = objWidthCount / 2;
+// let objs = [];
+// let objWidthCount = 6;
+// let objWidthCountHalf = objWidthCount / 2;
 
 // for (let x = 0; x < objWidthCount; x++) {
 //   for (let y = 0; y < objWidthCount; y++) {
@@ -100,8 +100,9 @@ function tick(){
   renderer.render(scene, camera);
   window.requestAnimationFrame(tick);
   // setTimeout(tick, 500);
-  cylinder.rotation.x = Math.sin(cameraRadian) * 0.5;
+  cylinder.rotation.x = Math.sin(cameraRadian) * 1;
   cylinder.rotation.y += 0.01;
+  cylinder.rotation.z += 0.01;
   cylinder.setNeedUpdate();
 
   camera.setNeedUpdate();
