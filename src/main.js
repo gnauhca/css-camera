@@ -9,6 +9,7 @@ import AmbientLight from './AmbientLight.js'
 
 import Box from './geometry/Box.js'
 import Cylinder from './geometry/Cylinder.js'
+import * as CONST from './CONST.js';
 
 import { Vector2 } from './math/Vector2.js';
 import { Vector3 } from './math/Vector3.js';
@@ -20,5 +21,6 @@ export {
   Face, Group, Scene, Camera, Renderer, 
   AmbientLight, DirectionLight,
   Box, Cylinder,
+  CONST,
   Vector2, Vector3, Matrix4, Euler, Quaternion
 };

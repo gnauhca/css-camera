@@ -5,10 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>text</title>
+  <title>gallery</title>
   <style>
     body {
-      background: black;
+      /* background: black; */
     }
     * {
       margin: 0;
@@ -26,7 +26,6 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background-image: radial-gradient(circle at center, #001124 0%, #000 50%, #000 100%)
       /* border: 1px solid red; */
     }
 
@@ -34,6 +33,10 @@
       /* font-size: 50px; */
       color: #abcdef;
       font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+      padding: 5%;
+      border: 10px solid #f7f4ea;
+      box-shadow: 0 0 0 4px #ddd;
+      border-radius: 100%;
     }
   </style>
   <script src="./lib/stats.min.js"></script>
@@ -58,52 +61,82 @@
     let containerElem = document.querySelector('.container');
     let camera = new C3.Camera(Math.PI / 4);
 
-    camera.setPosition(0, 0, 800);
+    camera.setPosition(0, 0, 2000);
     camera.setLookAt(0, 0, 0);
     camera.setUp(0, 1, 0);
 
     let scene = new C3.Scene(containerElem);
 
-    let directionLight = new C3.DirectionLight(new C3.Vector3(0, 0, 10), 0.9);
+    let directionLight = new C3.DirectionLight(new C3.Vector3(0, 0, 10), 1);
     scene.addLight(directionLight);
     let directionLight2 = new C3.DirectionLight(new C3.Vector3(2, -10, 10), 0.4);
     // scene.addLight(directionLight2);
     let ambientLight = new C3.AmbientLight(0.1);
-    scene.addLight(ambientLight);
+    // scene.addLight(ambientLight);
 
-    let textSize = 40;
-    let str = 'ARE YOU SURE?';
-    let texts = str.split('');
+    let imageWidth = 225;
+    let imageHeight = 225;
+    let imageCount = 16;
+    let imageCol = 4;
+    let imageRow = imageCount / imageCol;
+    let circleSegment = 20;
+    let segmentRadian = Math.PI / 20;
+    let sphereRadius = imageWidth / 2 / Math.sin(segmentRadian);
+    let initRadian = C3.CONST.R90;
+
+    console.log(sphereRadius);
+
     let faces = [];
     let faceGroup = new C3.Group();
-    let lightHandler = function(elem, brightness) {
-      elem.style.filter = `brightness(${brightness})`;
-    }
 
-    for (let i = 0; i < texts.length; i++) {
+    for (let i = 0; i < imageCount; i++) {
+      let row = ((i / imageCol) | 0) - (imageRow - 1) / 2;
+      let col = i % imageCol - (imageCol - 1) / 2;
+      let radian = initRadian + col * segmentRadian;
+
       faces[i] = new C3.Face();
       faces[i].position.y = -10000;
       faces[i].backside = true;
-      faces[i].lightHandler = lightHandler;
       faces[i].setNeedUpdate();
       faces[i].elem.className = 'face';
-      faces[i].elem.style.fontSize = textSize + 'px';
+      faces[i].elem.style['width'] = `${imageWidth}px`;
+      faces[i].elem.style['height'] = `${imageHeight}px`;
+      faces[i].elem.style['background-image'] = `url(./image/${i + 1}.jpg)`;
       faces[i].elem.style['backface-visibility'] = 'visible';
-      faces[i].elem.innerHTML = texts[i];
-      faces[i].userData.initPosition = new C3.Vector3(textSize * 0.8 * (i - (texts.length) / 2), -textSize * 5 * (Math.random() * 0.3 + 0.7), textSize * 5 * (Math.random() - 0.5));
-      faces[i].userData.initRotation = new C3.Vector3(
-        (Math.random() - 0.5) * 3.14 * 4,
-        (Math.random() - 0.5) * 3.14 * 4,
-        (Math.random() - 0.5) * 3.14 * 4
+      faces[i].userData.finalPosition = new C3.Vector3(
+        Math.cos(radian) * sphereRadius, 
+        row * imageHeight * 1.2, 
+        Math.sin(radian) * sphereRadius, 
       );
+      faces[i].userData.finalRotation = new C3.Vector3(0, col * segmentRadian, 0);
 
-      faces[i].userData.finalPosition = new C3.Vector3(faces[i].userData.initPosition.x, 0, 0);
-      faces[i].userData.finalRotation = new C3.Vector3(0, 0, 0);
+      faces[i].userData.initPosition = new C3.Vector3(
+        faces[i].userData.finalPosition.x, 
+        col * segmentRadian, 
+        imageWidth * 0 * (Math.random() - 0.5)
+      );
+      faces[i].userData.initRotation = new C3.Vector3(
+        (Math.random() - 0.5) * 3.14 * 0,
+        (Math.random() - 0.5) * 3.14 * 0,
+        (Math.random() - 0.5) * 3.14 * 3
+      );
+      // faces[i].userData.initPosition = new C3.Vector3(
+      //   0, 
+      //   0, 
+      //   -400
+      // );
+
+      // faces[i].userData.initRotation = new C3.Vector3(
+      //   (Math.random() - 0.5) * 3.14 * 6,
+      //   (Math.random() - 0.5) * 3.14 * 1,
+      //   (Math.random() - 0.5) * 3.14 * 1
+      // );
+
 
       faces[i].tween = new TWEEN.Tween({ p: 0 })
       .to({ p: 1 }, 1500)
       .easing(TWEEN.Easing.Bounce.Out)
-      .delay(i * 100)
+      .delay((imageCount - i) * 150)
       .onUpdate((function(face) {
         return function(t) {
           let aniPercent = t.p;
@@ -121,8 +154,10 @@
             rSub.clone().setLength(rSub.length() * aniPercent)
           );
           face.rotation = new C3.Euler(rotationVec.x, rotationVec.y, rotationVec.z);
-
+          // face.scale = new C3.Vector3().setScalar(aniPercent);
           face.setNeedUpdate();
+
+          face.elem.style.opacity = 1 - -face.position.z / 1600
         }
       })(faces[i]))
       .start();

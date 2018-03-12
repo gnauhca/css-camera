@@ -38,7 +38,7 @@ export default class DirectionLight extends Light {
     setNeedUpdate();
   }
 
-  calBrightness(position, normal, backSide) {
+  calBrightness(position, normal, backside) {
     // overwrite
 
     let lightPosition = this.position.clone();;
@@ -47,7 +47,7 @@ export default class DirectionLight extends Light {
     let cosOfAngle = lightPosition.dot(normal) / (lightPosition.length() * 1);
     let brightness = 0;
 
-    if (backSide) {
+    if (backside) {
       brightness = Math.abs(cosOfAngle);
     } else {
       brightness = cosOfAngle < 0 ? 0 : cosOfAngle;

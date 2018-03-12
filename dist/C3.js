@@ -1834,6 +1834,8 @@ class Face extends __WEBPACK_IMPORTED_MODULE_0__Object3D_js__["a" /* default */]
     this.elemMatrixNeedUpdate = true; // 元素 Matrix 是否需要更新
     this.elemLightNeedUpdate = true; // 元素 亮度 是否需要更新
     this.brightness = 1; // 元素亮度
+    this.backside = false;
+    this.lightHandler; // 自定义光照处理，接受 brightness 作为参数
     
     const faceStyles = {
       position: 'absolute',
@@ -1841,7 +1843,7 @@ class Face extends __WEBPACK_IMPORTED_MODULE_0__Object3D_js__["a" /* default */]
       left: '50%',
       overflow: 'hidden',
       'box-sizing': 'border-box',
-      // 'backface-visibility': 'hidden'
+      'backface-visibility': 'hidden'
     };
 
     this.elem = elem || document.createElement('div');
@@ -1858,14 +1860,19 @@ class Face extends __WEBPACK_IMPORTED_MODULE_0__Object3D_js__["a" /* default */]
 
   setBrightness(brightness) {
     if (this.brightness !== brightness) {
-      this.brightness = brightness;
+      this.brightness = brightness
       this.elemLightNeedUpdate = true;
     }
   }
 
   updateElemBrightness() {
     if (this.elemLightNeedUpdate) {
-      this.elem.style.filter = `brightness(${this.brightness})`;
+      if (typeof this.lightHandler === 'function') {
+        this.lightHandler(this.elem, this.brightness);
+      } else {
+        this.elem.style.filter = `brightness(${this.brightness})`;
+      }
+      
       this.elemLightNeedUpdate = false;
     }
   }
@@ -3260,29 +3267,30 @@ Object.assign( Euler.prototype, {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 const R360 = Math.PI * 2;
-/* unused harmony export R360 */
+/* harmony export (immutable) */ __webpack_exports__["R360"] = R360;
 
 const R180 = Math.PI;
-/* harmony export (immutable) */ __webpack_exports__["a"] = R180;
+/* harmony export (immutable) */ __webpack_exports__["R180"] = R180;
 
 const R150 = Math.PI * 0.8333333333;
-/* unused harmony export R150 */
+/* harmony export (immutable) */ __webpack_exports__["R150"] = R150;
 
 const R120 = Math.PI * 0.6666666666;
-/* unused harmony export R120 */
+/* harmony export (immutable) */ __webpack_exports__["R120"] = R120;
 
 const R90 = Math.PI * 0.5;
-/* harmony export (immutable) */ __webpack_exports__["b"] = R90;
+/* harmony export (immutable) */ __webpack_exports__["R90"] = R90;
 
 const R60 = Math.PI * 0.3333333333;
-/* unused harmony export R60 */
+/* harmony export (immutable) */ __webpack_exports__["R60"] = R60;
 
 const R45 = Math.PI * 0.25;
-/* unused harmony export R45 */
+/* harmony export (immutable) */ __webpack_exports__["R45"] = R45;
 
 const R30 = Math.PI * 0.1666666667;
-/* unused harmony export R30 */
+/* harmony export (immutable) */ __webpack_exports__["R30"] = R30;
 
 
 /***/ }),
@@ -3301,11 +3309,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__AmbientLight_js__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__geometry_Box_js__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__geometry_Cylinder_js__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__math_Vector2_js__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__math_Vector3_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__math_Matrix4_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__math_Euler_js__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__math_Quaternion_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__CONST_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__math_Vector2_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__math_Vector3_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__math_Matrix4_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__math_Euler_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__math_Quaternion_js__ = __webpack_require__(5);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Face", function() { return __WEBPACK_IMPORTED_MODULE_0__Face_js__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Group", function() { return __WEBPACK_IMPORTED_MODULE_1__Group_js__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Scene", function() { return __WEBPACK_IMPORTED_MODULE_2__Scene_js__["a"]; });
@@ -3315,11 +3324,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "DirectionLight", function() { return __WEBPACK_IMPORTED_MODULE_6__DirectionLight_js__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Box", function() { return __WEBPACK_IMPORTED_MODULE_8__geometry_Box_js__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Cylinder", function() { return __WEBPACK_IMPORTED_MODULE_9__geometry_Cylinder_js__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Vector2", function() { return __WEBPACK_IMPORTED_MODULE_10__math_Vector2_js__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Vector3", function() { return __WEBPACK_IMPORTED_MODULE_11__math_Vector3_js__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Matrix4", function() { return __WEBPACK_IMPORTED_MODULE_12__math_Matrix4_js__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Euler", function() { return __WEBPACK_IMPORTED_MODULE_13__math_Euler_js__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Quaternion", function() { return __WEBPACK_IMPORTED_MODULE_14__math_Quaternion_js__["a"]; });
+/* harmony reexport (module object) */ __webpack_require__.d(__webpack_exports__, "CONST", function() { return __WEBPACK_IMPORTED_MODULE_10__CONST_js__; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Vector2", function() { return __WEBPACK_IMPORTED_MODULE_11__math_Vector2_js__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Vector3", function() { return __WEBPACK_IMPORTED_MODULE_12__math_Vector3_js__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Matrix4", function() { return __WEBPACK_IMPORTED_MODULE_13__math_Matrix4_js__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Euler", function() { return __WEBPACK_IMPORTED_MODULE_14__math_Euler_js__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Quaternion", function() { return __WEBPACK_IMPORTED_MODULE_15__math_Quaternion_js__["a"]; });
+
 
 
 
@@ -3572,7 +3583,7 @@ class Renderer {
   setObj(obj, lights, lightsUpdated) {
     if (obj instanceof __WEBPACK_IMPORTED_MODULE_1__Face_js__["a" /* default */]) {
 
-      if (lightsUpdated || obj.normalNeedUpdate) {
+      if (this.options.lightEffect && (lightsUpdated || obj.normalNeedUpdate)) {
         let faceNormal = obj.getWorldNormal();
         let sumBrightness = 0;
 
@@ -3687,7 +3698,7 @@ class DirectionLight extends __WEBPACK_IMPORTED_MODULE_0__Light_js__["a" /* defa
     setNeedUpdate();
   }
 
-  calBrightness(position, normal, backSide) {
+  calBrightness(position, normal, backside) {
     // overwrite
 
     let lightPosition = this.position.clone();;
@@ -3696,7 +3707,7 @@ class DirectionLight extends __WEBPACK_IMPORTED_MODULE_0__Light_js__["a" /* defa
     let cosOfAngle = lightPosition.dot(normal) / (lightPosition.length() * 1);
     let brightness = 0;
 
-    if (backSide) {
+    if (backside) {
       brightness = Math.abs(cosOfAngle);
     } else {
       brightness = cosOfAngle < 0 ? 0 : cosOfAngle;
@@ -3788,27 +3799,27 @@ class Box extends __WEBPACK_IMPORTED_MODULE_1__Group_js__["a" /* default */] {
     this.faces.front.elem.style.height = height + 'px';
 
     this.faces.back.setPosition(0, 0, -depth / 2);
-    this.faces.back.rotation.x = __WEBPACK_IMPORTED_MODULE_2__CONST_js__["a" /* R180 */];
+    this.faces.back.rotation.x = __WEBPACK_IMPORTED_MODULE_2__CONST_js__["R180"];
     this.faces.back.elem.style.width = width + 'px';
     this.faces.back.elem.style.height = height + 'px';
 
     this.faces.left.setPosition(-width / 2, 0, 0);
-    this.faces.left.rotation.y = -__WEBPACK_IMPORTED_MODULE_2__CONST_js__["b" /* R90 */];
+    this.faces.left.rotation.y = -__WEBPACK_IMPORTED_MODULE_2__CONST_js__["R90"];
     this.faces.left.elem.style.width = depth + 'px';
     this.faces.left.elem.style.height = height + 'px';
 
     this.faces.right.setPosition(width / 2, 0, 0);
-    this.faces.right.rotation.y = __WEBPACK_IMPORTED_MODULE_2__CONST_js__["b" /* R90 */];
+    this.faces.right.rotation.y = __WEBPACK_IMPORTED_MODULE_2__CONST_js__["R90"];
     this.faces.right.elem.style.width = depth + 'px';
     this.faces.right.elem.style.height = height + 'px';
 
     this.faces.top.setPosition(0, height / 2, 0);
-    this.faces.top.rotation.x = -__WEBPACK_IMPORTED_MODULE_2__CONST_js__["b" /* R90 */];
+    this.faces.top.rotation.x = -__WEBPACK_IMPORTED_MODULE_2__CONST_js__["R90"];
     this.faces.top.elem.style.width = width + 'px';
     this.faces.top.elem.style.height = depth + 'px';
 
     this.faces.bottom.setPosition(0, -height / 2, 0);
-    this.faces.bottom.rotation.x = __WEBPACK_IMPORTED_MODULE_2__CONST_js__["b" /* R90 */];
+    this.faces.bottom.rotation.x = __WEBPACK_IMPORTED_MODULE_2__CONST_js__["R90"];
     this.faces.bottom.elem.style.width = width + 'px';
     this.faces.bottom.elem.style.height = depth + 'px';
     this.width = width;
@@ -3963,7 +3974,7 @@ class Cylinder extends __WEBPACK_IMPORTED_MODULE_1__Group_js__["a" /* default */
       background: bottomBackground,
       'background-size': '100%'
     };
-    let startRadian = -segmentRadianHalf - __WEBPACK_IMPORTED_MODULE_4__CONST_js__["b" /* R90 */];
+    let startRadian = -segmentRadianHalf - __WEBPACK_IMPORTED_MODULE_4__CONST_js__["R90"];
 
     for (let i = 0; i < radiusSegment; i++) {
       let currentRadian = startRadian - i * segmentRadian;
@@ -3986,10 +3997,10 @@ class Cylinder extends __WEBPACK_IMPORTED_MODULE_1__Group_js__["a" /* default */
     let bottomFace = new __WEBPACK_IMPORTED_MODULE_0__Face_js__["a" /* default */]();
 
     topFace.setPosition(0, -height / 2, 0);
-    topFace.setRotation(__WEBPACK_IMPORTED_MODULE_4__CONST_js__["b" /* R90 */], 0, 0);
+    topFace.setRotation(__WEBPACK_IMPORTED_MODULE_4__CONST_js__["R90"], 0, 0);
 
     bottomFace.setPosition(0, height / 2, 0);
-    bottomFace.setRotation(-__WEBPACK_IMPORTED_MODULE_4__CONST_js__["b" /* R90 */], 0, 0);
+    bottomFace.setRotation(-__WEBPACK_IMPORTED_MODULE_4__CONST_js__["R90"], 0, 0);
 
 
     __WEBPACK_IMPORTED_MODULE_5__util_util_js__["a" /* setStyles */](topFace.elem, topStyles);

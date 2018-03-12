@@ -15,7 +15,7 @@ class Renderer {
   setObj(obj, lights, lightsUpdated) {
     if (obj instanceof Face) {
 
-      if (lightsUpdated || obj.normalNeedUpdate) {
+      if (this.options.lightEffect && (lightsUpdated || obj.normalNeedUpdate)) {
         let faceNormal = obj.getWorldNormal();
         let sumBrightness = 0;
 
