@@ -79,7 +79,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Vector3; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Math__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Math__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Matrix4__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Quaternion__ = __webpack_require__(5);
 
@@ -1760,7 +1760,7 @@ Object.assign( Matrix4.prototype, {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Object3D_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Object3D_js__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util_util_js__ = __webpack_require__(6);
 
 
@@ -1823,7 +1823,7 @@ class Group extends __WEBPACK_IMPORTED_MODULE_0__Object3D_js__["a" /* default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Object3D_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Object3D_js__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util_util_js__ = __webpack_require__(6);
 
 
@@ -2550,9 +2550,40 @@ function setStyles(elem, styles) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+const R360 = Math.PI * 2;
+/* harmony export (immutable) */ __webpack_exports__["R360"] = R360;
+
+const R180 = Math.PI;
+/* harmony export (immutable) */ __webpack_exports__["R180"] = R180;
+
+const R150 = Math.PI * 0.8333333333;
+/* harmony export (immutable) */ __webpack_exports__["R150"] = R150;
+
+const R120 = Math.PI * 0.6666666666;
+/* harmony export (immutable) */ __webpack_exports__["R120"] = R120;
+
+const R90 = Math.PI * 0.5;
+/* harmony export (immutable) */ __webpack_exports__["R90"] = R90;
+
+const R60 = Math.PI * 0.3333333333;
+/* harmony export (immutable) */ __webpack_exports__["R60"] = R60;
+
+const R45 = Math.PI * 0.25;
+/* harmony export (immutable) */ __webpack_exports__["R45"] = R45;
+
+const R30 = Math.PI * 0.1666666667;
+/* harmony export (immutable) */ __webpack_exports__["R30"] = R30;
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__math_Vector3_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__math_Matrix4_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__math_Euler_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__math_Euler_js__ = __webpack_require__(10);
 
 
 
@@ -2723,7 +2754,7 @@ class Object3D {
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2899,7 +2930,7 @@ var _Math = {
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2907,7 +2938,7 @@ var _Math = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Quaternion__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Vector3__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Matrix4__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Math__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Math__ = __webpack_require__(9);
 
 
 
@@ -3263,37 +3294,6 @@ Object.assign( Euler.prototype, {
 
 
 /***/ }),
-/* 10 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-const R360 = Math.PI * 2;
-/* harmony export (immutable) */ __webpack_exports__["R360"] = R360;
-
-const R180 = Math.PI;
-/* harmony export (immutable) */ __webpack_exports__["R180"] = R180;
-
-const R150 = Math.PI * 0.8333333333;
-/* harmony export (immutable) */ __webpack_exports__["R150"] = R150;
-
-const R120 = Math.PI * 0.6666666666;
-/* harmony export (immutable) */ __webpack_exports__["R120"] = R120;
-
-const R90 = Math.PI * 0.5;
-/* harmony export (immutable) */ __webpack_exports__["R90"] = R90;
-
-const R60 = Math.PI * 0.3333333333;
-/* harmony export (immutable) */ __webpack_exports__["R60"] = R60;
-
-const R45 = Math.PI * 0.25;
-/* harmony export (immutable) */ __webpack_exports__["R45"] = R45;
-
-const R30 = Math.PI * 0.1666666667;
-/* harmony export (immutable) */ __webpack_exports__["R30"] = R30;
-
-
-/***/ }),
 /* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -3309,11 +3309,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__AmbientLight_js__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__geometry_Box_js__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__geometry_Cylinder_js__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__CONST_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__CONST_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__math_Vector2_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__math_Vector3_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__math_Matrix4_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__math_Euler_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__math_Euler_js__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__math_Quaternion_js__ = __webpack_require__(5);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Face", function() { return __WEBPACK_IMPORTED_MODULE_0__Face_js__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Group", function() { return __WEBPACK_IMPORTED_MODULE_1__Group_js__["a"]; });
@@ -3759,7 +3759,7 @@ class AmbientLight extends __WEBPACK_IMPORTED_MODULE_0__Light_js__["a" /* defaul
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Face_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Group_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CONST_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CONST_js__ = __webpack_require__(7);
 
 
 
@@ -3851,7 +3851,7 @@ class Box extends __WEBPACK_IMPORTED_MODULE_1__Group_js__["a" /* default */] {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Group_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__math_Vector3_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__math_Matrix4_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__CONST_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__CONST_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__util_util_js__ = __webpack_require__(6);
 
 

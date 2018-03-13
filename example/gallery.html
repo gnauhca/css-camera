@@ -8,7 +8,7 @@
   <title>gallery</title>
   <style>
     body {
-      /* background: black; */
+      background: black;
     }
     * {
       margin: 0;
@@ -36,7 +36,13 @@
       padding: 5%;
       border: 10px solid #f7f4ea;
       box-shadow: 0 0 0 4px #ddd;
-      border-radius: 100%;
+      transition: width .3s, height .3s;
+      border-radius: 10%;
+      background-position: center;
+    }
+    .face:hover {
+      width: 300px!important;
+      height: 300px!important;
     }
   </style>
   <script src="./lib/stats.min.js"></script>
@@ -61,7 +67,7 @@
     let containerElem = document.querySelector('.container');
     let camera = new C3.Camera(Math.PI / 4);
 
-    camera.setPosition(0, 0, 2000);
+    camera.setPosition(0, 0, 5000);
     camera.setLookAt(0, 0, 0);
     camera.setUp(0, 1, 0);
 
@@ -76,15 +82,16 @@
 
     let imageWidth = 225;
     let imageHeight = 225;
-    let imageCount = 16;
-    let imageCol = 4;
+    let imageCount = 80;
+    let imageCol = 20;
     let imageRow = imageCount / imageCol;
     let circleSegment = 20;
-    let segmentRadian = Math.PI / 20;
-    let sphereRadius = imageWidth / 2 / Math.sin(segmentRadian);
+    let segmentRadian = Math.PI * 2 / circleSegment;
+    let sphereRadius = imageWidth * 0.6 / Math.sin(segmentRadian / 2);
     let initRadian = C3.CONST.R90;
-
-    console.log(sphereRadius);
+    let lightHandler = function(elem, brightness) {
+      elem.style.filter = `brightness(${brightness})`;
+    }
 
     let faces = [];
     let faceGroup = new C3.Group();
@@ -97,46 +104,47 @@
       faces[i] = new C3.Face();
       faces[i].position.y = -10000;
       faces[i].backside = true;
+      faces[i].lightHandler = lightHandler;
       faces[i].setNeedUpdate();
       faces[i].elem.className = 'face';
       faces[i].elem.style['width'] = `${imageWidth}px`;
       faces[i].elem.style['height'] = `${imageHeight}px`;
-      faces[i].elem.style['background-image'] = `url(./image/${i + 1}.jpg)`;
+      faces[i].elem.style['background-image'] = `url(./image/${i % 16 + 1}.jpg)`;
       faces[i].elem.style['backface-visibility'] = 'visible';
       faces[i].userData.finalPosition = new C3.Vector3(
         Math.cos(radian) * sphereRadius, 
         row * imageHeight * 1.2, 
         Math.sin(radian) * sphereRadius, 
       );
-      faces[i].userData.finalRotation = new C3.Vector3(0, col * segmentRadian, 0);
+      faces[i].userData.finalRotation = new C3.Vector3(0, -col * segmentRadian, 0);
 
-      faces[i].userData.initPosition = new C3.Vector3(
-        faces[i].userData.finalPosition.x, 
-        col * segmentRadian, 
-        imageWidth * 0 * (Math.random() - 0.5)
-      );
-      faces[i].userData.initRotation = new C3.Vector3(
-        (Math.random() - 0.5) * 3.14 * 0,
-        (Math.random() - 0.5) * 3.14 * 0,
-        (Math.random() - 0.5) * 3.14 * 3
-      );
       // faces[i].userData.initPosition = new C3.Vector3(
-      //   0, 
-      //   0, 
-      //   -400
+      //   faces[i].userData.finalPosition.x, 
+      //   col * segmentRadian, 
+      //   imageWidth * 0 * (Math.random() - 0.5)
       // );
-
       // faces[i].userData.initRotation = new C3.Vector3(
-      //   (Math.random() - 0.5) * 3.14 * 6,
-      //   (Math.random() - 0.5) * 3.14 * 1,
-      //   (Math.random() - 0.5) * 3.14 * 1
+      //   (Math.random() - 0.5) * 3.14 * 0,
+      //   (Math.random() - 0.5) * 3.14 * 0,
+      //   (Math.random() - 0.5) * 3.14 * 3
       // );
+      faces[i].userData.initPosition = new C3.Vector3(
+        (Math.random() - 0.5) * 6000, 
+        (Math.random() - 0.5) * 6000, 
+        (Math.random() - 0.5) * 6000
+      );
+
+      faces[i].userData.initRotation = new C3.Vector3(
+        (Math.random() - 0.5) * 3.14 * 1,
+        (Math.random() - 0.5) * 3.14 * 1,
+        (Math.random() - 0.5) * 3.14 * 1
+      );
 
 
       faces[i].tween = new TWEEN.Tween({ p: 0 })
-      .to({ p: 1 }, 1500)
-      .easing(TWEEN.Easing.Bounce.Out)
-      .delay((imageCount - i) * 150)
+      .to({ p: 1 }, 4500)
+      .easing(TWEEN.Easing.Elastic.InOut)
+      .delay((imageCount - i) * 10)
       .onUpdate((function(face) {
         return function(t) {
           let aniPercent = t.p;
@@ -157,7 +165,7 @@
           // face.scale = new C3.Vector3().setScalar(aniPercent);
           face.setNeedUpdate();
 
-          face.elem.style.opacity = 1 - -face.position.z / 1600
+          // face.elem.style.opacity = 1 - -face.position.z / 1600
         }
       })(faces[i]))
       .start();
@@ -179,7 +187,7 @@
       renderer.render(scene, camera);
       window.requestAnimationFrame(tick);
 
-      // faceGroup.rotation.y += 0.05;
+      faceGroup.rotation.y += 0.006;
       // faceGroup.rotation.z += 0.01;
       faceGroup.setNeedUpdate();
 
