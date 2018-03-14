@@ -43,6 +43,21 @@ export default class Camera {
     this.setNeedUpdate();
   }
 
+  translateX(x) {
+    this.position.x += x;
+    this.setNeedUpdate();
+  }
+
+  translateY(y) {
+    this.position.y += y;
+    this.setNeedUpdate();
+  }
+
+  translateZ(z) {
+    this.position.z += z;
+    this.setNeedUpdate();
+  }
+
   setLookAt(x, y, z) {
     this.lookAtPoint.set(x, y, z);
     this.setNeedUpdate();

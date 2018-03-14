@@ -11,6 +11,7 @@ import Box from './geometry/Box.js'
 import Cylinder from './geometry/Cylinder.js'
 import * as CONST from './CONST.js';
 
+import { _Math as Math } from './math/Math.js';
 import { Vector2 } from './math/Vector2.js';
 import { Vector3 } from './math/Vector3.js';
 import { Matrix4 } from './math/Matrix4.js';
@@ -22,5 +23,5 @@ export {
   AmbientLight, DirectionLight,
   Box, Cylinder,
   CONST,
-  Vector2, Vector3, Matrix4, Euler, Quaternion
+  Math, Vector2, Vector3, Matrix4, Euler, Quaternion
 };

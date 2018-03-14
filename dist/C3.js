@@ -79,9 +79,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Vector3; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Math__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Math__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Matrix4__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Quaternion__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Quaternion__ = __webpack_require__(6);
 
 
 
@@ -1760,8 +1760,8 @@ Object.assign( Matrix4.prototype, {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Object3D_js__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util_util_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Object3D_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util_util_js__ = __webpack_require__(7);
 
 
 
@@ -1823,8 +1823,8 @@ class Group extends __WEBPACK_IMPORTED_MODULE_0__Object3D_js__["a" /* default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Object3D_js__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util_util_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Object3D_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util_util_js__ = __webpack_require__(7);
 
 
 
@@ -1910,6 +1910,182 @@ class Light {
 
 /***/ }),
 /* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _Math; });
+/**
+ * @author alteredq / http://alteredqualia.com/
+ * @author mrdoob / http://mrdoob.com/
+ */
+
+var _Math = {
+
+	DEG2RAD: Math.PI / 180,
+	RAD2DEG: 180 / Math.PI,
+
+	generateUUID: function () {
+
+		// http://www.broofa.com/Tools/Math.uuid.htm
+
+		var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split( '' );
+		var uuid = new Array( 36 );
+		var rnd = 0, r;
+
+		return function generateUUID() {
+
+			for ( var i = 0; i < 36; i ++ ) {
+
+				if ( i === 8 || i === 13 || i === 18 || i === 23 ) {
+
+					uuid[ i ] = '-';
+
+				} else if ( i === 14 ) {
+
+					uuid[ i ] = '4';
+
+				} else {
+
+					if ( rnd <= 0x02 ) rnd = 0x2000000 + ( Math.random() * 0x1000000 ) | 0;
+					r = rnd & 0xf;
+					rnd = rnd >> 4;
+					uuid[ i ] = chars[ ( i === 19 ) ? ( r & 0x3 ) | 0x8 : r ];
+
+				}
+
+			}
+
+			return uuid.join( '' );
+
+		};
+
+	}(),
+
+	clamp: function ( value, min, max ) {
+
+		return Math.max( min, Math.min( max, value ) );
+
+	},
+
+	// compute euclidian modulo of m % n
+	// https://en.wikipedia.org/wiki/Modulo_operation
+
+	euclideanModulo: function ( n, m ) {
+
+		return ( ( n % m ) + m ) % m;
+
+	},
+
+	// Linear mapping from range <a1, a2> to range <b1, b2>
+
+	mapLinear: function ( x, a1, a2, b1, b2 ) {
+
+		return b1 + ( x - a1 ) * ( b2 - b1 ) / ( a2 - a1 );
+
+	},
+
+	// https://en.wikipedia.org/wiki/Linear_interpolation
+
+	lerp: function ( x, y, t ) {
+
+		return ( 1 - t ) * x + t * y;
+
+	},
+
+	// http://en.wikipedia.org/wiki/Smoothstep
+
+	smoothstep: function ( x, min, max ) {
+
+		if ( x <= min ) return 0;
+		if ( x >= max ) return 1;
+
+		x = ( x - min ) / ( max - min );
+
+		return x * x * ( 3 - 2 * x );
+
+	},
+
+	smootherstep: function ( x, min, max ) {
+
+		if ( x <= min ) return 0;
+		if ( x >= max ) return 1;
+
+		x = ( x - min ) / ( max - min );
+
+		return x * x * x * ( x * ( x * 6 - 15 ) + 10 );
+
+	},
+
+	// Random integer from <low, high> interval
+
+	randInt: function ( low, high ) {
+
+		return low + Math.floor( Math.random() * ( high - low + 1 ) );
+
+	},
+
+	// Random float from <low, high> interval
+
+	randFloat: function ( low, high ) {
+
+		return low + Math.random() * ( high - low );
+
+	},
+
+	// Random float from <-range/2, range/2> interval
+
+	randFloatSpread: function ( range ) {
+
+		return range * ( 0.5 - Math.random() );
+
+	},
+
+	degToRad: function ( degrees ) {
+
+		return degrees * _Math.DEG2RAD;
+
+	},
+
+	radToDeg: function ( radians ) {
+
+		return radians * _Math.RAD2DEG;
+
+	},
+
+	isPowerOfTwo: function ( value ) {
+
+		return ( value & ( value - 1 ) ) === 0 && value !== 0;
+
+	},
+
+	nearestPowerOfTwo: function ( value ) {
+
+		return Math.pow( 2, Math.round( Math.log( value ) / Math.LN2 ) );
+
+	},
+
+	nextPowerOfTwo: function ( value ) {
+
+		value --;
+		value |= value >> 1;
+		value |= value >> 2;
+		value |= value >> 4;
+		value |= value >> 8;
+		value |= value >> 16;
+		value ++;
+
+		return value;
+
+	}
+
+};
+
+
+
+
+
+/***/ }),
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2528,7 +2704,7 @@ Object.assign( Quaternion.prototype, {
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2546,7 +2722,7 @@ function setStyles(elem, styles) {
 }
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2577,7 +2753,7 @@ const R30 = Math.PI * 0.1666666667;
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2754,191 +2930,15 @@ class Object3D {
 
 
 /***/ }),
-/* 9 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _Math; });
-/**
- * @author alteredq / http://alteredqualia.com/
- * @author mrdoob / http://mrdoob.com/
- */
-
-var _Math = {
-
-	DEG2RAD: Math.PI / 180,
-	RAD2DEG: 180 / Math.PI,
-
-	generateUUID: function () {
-
-		// http://www.broofa.com/Tools/Math.uuid.htm
-
-		var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split( '' );
-		var uuid = new Array( 36 );
-		var rnd = 0, r;
-
-		return function generateUUID() {
-
-			for ( var i = 0; i < 36; i ++ ) {
-
-				if ( i === 8 || i === 13 || i === 18 || i === 23 ) {
-
-					uuid[ i ] = '-';
-
-				} else if ( i === 14 ) {
-
-					uuid[ i ] = '4';
-
-				} else {
-
-					if ( rnd <= 0x02 ) rnd = 0x2000000 + ( Math.random() * 0x1000000 ) | 0;
-					r = rnd & 0xf;
-					rnd = rnd >> 4;
-					uuid[ i ] = chars[ ( i === 19 ) ? ( r & 0x3 ) | 0x8 : r ];
-
-				}
-
-			}
-
-			return uuid.join( '' );
-
-		};
-
-	}(),
-
-	clamp: function ( value, min, max ) {
-
-		return Math.max( min, Math.min( max, value ) );
-
-	},
-
-	// compute euclidian modulo of m % n
-	// https://en.wikipedia.org/wiki/Modulo_operation
-
-	euclideanModulo: function ( n, m ) {
-
-		return ( ( n % m ) + m ) % m;
-
-	},
-
-	// Linear mapping from range <a1, a2> to range <b1, b2>
-
-	mapLinear: function ( x, a1, a2, b1, b2 ) {
-
-		return b1 + ( x - a1 ) * ( b2 - b1 ) / ( a2 - a1 );
-
-	},
-
-	// https://en.wikipedia.org/wiki/Linear_interpolation
-
-	lerp: function ( x, y, t ) {
-
-		return ( 1 - t ) * x + t * y;
-
-	},
-
-	// http://en.wikipedia.org/wiki/Smoothstep
-
-	smoothstep: function ( x, min, max ) {
-
-		if ( x <= min ) return 0;
-		if ( x >= max ) return 1;
-
-		x = ( x - min ) / ( max - min );
-
-		return x * x * ( 3 - 2 * x );
-
-	},
-
-	smootherstep: function ( x, min, max ) {
-
-		if ( x <= min ) return 0;
-		if ( x >= max ) return 1;
-
-		x = ( x - min ) / ( max - min );
-
-		return x * x * x * ( x * ( x * 6 - 15 ) + 10 );
-
-	},
-
-	// Random integer from <low, high> interval
-
-	randInt: function ( low, high ) {
-
-		return low + Math.floor( Math.random() * ( high - low + 1 ) );
-
-	},
-
-	// Random float from <low, high> interval
-
-	randFloat: function ( low, high ) {
-
-		return low + Math.random() * ( high - low );
-
-	},
-
-	// Random float from <-range/2, range/2> interval
-
-	randFloatSpread: function ( range ) {
-
-		return range * ( 0.5 - Math.random() );
-
-	},
-
-	degToRad: function ( degrees ) {
-
-		return degrees * _Math.DEG2RAD;
-
-	},
-
-	radToDeg: function ( radians ) {
-
-		return radians * _Math.RAD2DEG;
-
-	},
-
-	isPowerOfTwo: function ( value ) {
-
-		return ( value & ( value - 1 ) ) === 0 && value !== 0;
-
-	},
-
-	nearestPowerOfTwo: function ( value ) {
-
-		return Math.pow( 2, Math.round( Math.log( value ) / Math.LN2 ) );
-
-	},
-
-	nextPowerOfTwo: function ( value ) {
-
-		value --;
-		value |= value >> 1;
-		value |= value >> 2;
-		value |= value >> 4;
-		value |= value >> 8;
-		value |= value >> 16;
-		value ++;
-
-		return value;
-
-	}
-
-};
-
-
-
-
-
-/***/ }),
 /* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Euler; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Quaternion__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Quaternion__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Vector3__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Matrix4__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Math__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Math__ = __webpack_require__(5);
 
 
 
@@ -3309,12 +3309,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__AmbientLight_js__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__geometry_Box_js__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__geometry_Cylinder_js__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__CONST_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__math_Vector2_js__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__math_Vector3_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__math_Matrix4_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__math_Euler_js__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__math_Quaternion_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__CONST_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__math_Math_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__math_Vector2_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__math_Vector3_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__math_Matrix4_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__math_Euler_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__math_Quaternion_js__ = __webpack_require__(6);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Face", function() { return __WEBPACK_IMPORTED_MODULE_0__Face_js__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Group", function() { return __WEBPACK_IMPORTED_MODULE_1__Group_js__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Scene", function() { return __WEBPACK_IMPORTED_MODULE_2__Scene_js__["a"]; });
@@ -3325,11 +3326,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Box", function() { return __WEBPACK_IMPORTED_MODULE_8__geometry_Box_js__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Cylinder", function() { return __WEBPACK_IMPORTED_MODULE_9__geometry_Cylinder_js__["a"]; });
 /* harmony reexport (module object) */ __webpack_require__.d(__webpack_exports__, "CONST", function() { return __WEBPACK_IMPORTED_MODULE_10__CONST_js__; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Vector2", function() { return __WEBPACK_IMPORTED_MODULE_11__math_Vector2_js__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Vector3", function() { return __WEBPACK_IMPORTED_MODULE_12__math_Vector3_js__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Matrix4", function() { return __WEBPACK_IMPORTED_MODULE_13__math_Matrix4_js__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Euler", function() { return __WEBPACK_IMPORTED_MODULE_14__math_Euler_js__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Quaternion", function() { return __WEBPACK_IMPORTED_MODULE_15__math_Quaternion_js__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Math", function() { return __WEBPACK_IMPORTED_MODULE_11__math_Math_js__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Vector2", function() { return __WEBPACK_IMPORTED_MODULE_12__math_Vector2_js__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Vector3", function() { return __WEBPACK_IMPORTED_MODULE_13__math_Vector3_js__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Matrix4", function() { return __WEBPACK_IMPORTED_MODULE_14__math_Matrix4_js__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Euler", function() { return __WEBPACK_IMPORTED_MODULE_15__math_Euler_js__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Quaternion", function() { return __WEBPACK_IMPORTED_MODULE_16__math_Quaternion_js__["a"]; });
+
 
 
 
@@ -3482,6 +3485,21 @@ class Camera {
 
   setPositionZ(z) {
     this.position.z = z;
+    this.setNeedUpdate();
+  }
+
+  translateX(x) {
+    this.position.x += x;
+    this.setNeedUpdate();
+  }
+
+  translateY(y) {
+    this.position.y += y;
+    this.setNeedUpdate();
+  }
+
+  translateZ(z) {
+    this.position.z += z;
     this.setNeedUpdate();
   }
 
@@ -3759,7 +3777,7 @@ class AmbientLight extends __WEBPACK_IMPORTED_MODULE_0__Light_js__["a" /* defaul
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Face_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Group_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CONST_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CONST_js__ = __webpack_require__(8);
 
 
 
@@ -3851,8 +3869,8 @@ class Box extends __WEBPACK_IMPORTED_MODULE_1__Group_js__["a" /* default */] {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Group_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__math_Vector3_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__math_Matrix4_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__CONST_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__util_util_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__CONST_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__util_util_js__ = __webpack_require__(7);
 
 
 
