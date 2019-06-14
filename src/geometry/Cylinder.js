@@ -6,21 +6,24 @@ import * as CONST from '../CONST.js';
 import * as util from '../util/util.js';
 
 export default class Cylinder extends Group {
-  constructor(radiusTop, radiusBottom, height, radiusSegment, sideBackground, topBackground, bottomBackground) {
+  constructor(options) {
     super();
-    this.radiusBottom = radiusBottom;
-    this.radiusTop = radiusTop;
-    this.height = height;
-    this.sideBackground = sideBackground;
-    this.topBackground = topBackground;
-    this.bottomBackground = bottomBackground;
-    this.radiusSegment = radiusSegment;
 
-    this.createFaces(radiusTop, radiusBottom, height, radiusSegment, sideBackground, topBackground, bottomBackground);
+    this.options = options;
+    // this.radiusBottom = radiusBottom;
+    // this.radiusTop = radiusTop;
+    // this.height = height;
+    // this.sideBackground = sideBackground;
+    // this.topBackground = topBackground;
+    // this.bottomBackground = bottomBackground;
+    // this.radiusSegment = radiusSegment;
+
+    this.createFaces(options);
   }
 
-  createFaces(radiusTop, radiusBottom, height, radiusSegment, sideBackground, topBackground, bottomBackground) {
+  createFaces(options) {
 
+    const { radiusTop, radiusBottom, height, radiusSegment, sideBackground, topBackground, bottomBackground } = options;
 
     let segmentRadian = Math.PI * 2 / radiusSegment;
     let segmentRadianHalf = segmentRadian / 2;
@@ -62,9 +65,7 @@ export default class Cylinder extends Group {
     );
 
     let sideFaceStyles = {
-      'height': sideHeight,
-      'background': sideBackground,
-      'background-size': `auto ${sideHeight}px`
+      'height': sideHeight
     };
     if (endWidthSub > 0) {
       Object.assign(sideFaceStyles, {
@@ -82,6 +83,13 @@ export default class Cylinder extends Group {
       });
     }
 
+    if (sideBackground) {
+      Object.assign(sideFaceStyles, {
+        'background': sideBackground,
+        'background-size': `auto ${sideHeight}px`
+      });
+    }
+
     for (let i = 0; i < radiusSegment; i++) {
       let sideFace = new Face();
       let faceMatrix = new Matrix4().makeRotationAxis(
@@ -91,7 +99,9 @@ export default class Cylinder extends Group {
 
 
       util.setStyles(sideFace.elem, sideFaceStyles);
-      sideFace.elem.style['background-position'] = `${-maxTriangleWidth * i}px 0`
+      if (sideBackground) {
+        sideFace.elem.style['background-position'] = `${-maxTriangleWidth * i}px 0`
+      }
 
       faceMatrix.multiplyMatrices(
         faceMatrix,
@@ -103,6 +113,9 @@ export default class Cylinder extends Group {
       this.add(sideFace);
     }
 
+    if (options.open) {
+      return;
+    }
 
     // 顶面
     let topVertices = [];
@@ -157,15 +170,15 @@ export default class Cylinder extends Group {
   }
 
 
-  setbackground(background) {
-    if (!background) {
-      return;
-    }
+  // setbackground(background) {
+  //   if (!background) {
+  //     return;
+  //   }
 
-    this.background = background;
-    for (let key in this.faces) {
-      this.faces[key].elem.style.background = background;
-    }
-  }
+  //   this.background = background;
+  //   for (let key in this.faces) {
+  //     this.faces[key].elem.style.background = background;
+  //   }
+  // }
 
 }
